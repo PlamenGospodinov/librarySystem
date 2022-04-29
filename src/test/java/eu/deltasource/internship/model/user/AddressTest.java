@@ -13,10 +13,10 @@ class AddressTest {
         Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable countrySetterExeption = () -> ny.setCountry(null);
+        Executable countrySetterException = () -> ny.setCountry(null);
 
         // then
-        assertThrows(IllegalArgumentException.class, countrySetterExeption);
+        assertThrows(IllegalArgumentException.class, countrySetterException);
     }
 
     @Test
@@ -25,10 +25,10 @@ class AddressTest {
         Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable countrySetterExeption = () -> ny.setCountry("");
+        Executable countrySetterException = () -> ny.setCountry("");
 
         // then
-        assertThrows(IllegalArgumentException.class, countrySetterExeption);
+        assertThrows(IllegalArgumentException.class, countrySetterException);
     }
 
     @Test
@@ -37,10 +37,10 @@ class AddressTest {
         Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable citySetterExeption = () -> ny.setCity(null);
+        Executable citySetterException = () -> ny.setCity(null);
 
         // then
-        assertThrows(IllegalArgumentException.class, citySetterExeption);
+        assertThrows(IllegalArgumentException.class, citySetterException);
     }
 
     @Test
@@ -49,10 +49,10 @@ class AddressTest {
         Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable citySetterExeption = () -> ny.setCity("");
+        Executable citySetterException = () -> ny.setCity("");
 
         // then
-        assertThrows(IllegalArgumentException.class, citySetterExeption);
+        assertThrows(IllegalArgumentException.class, citySetterException);
     }
 
     @Test
@@ -61,10 +61,10 @@ class AddressTest {
         Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable streetSetterExeption = () -> ny.setStreet(null);
+        Executable streetSetterException = () -> ny.setStreet(null);
 
         // then
-        assertThrows(IllegalArgumentException.class, streetSetterExeption);
+        assertThrows(IllegalArgumentException.class, streetSetterException);
     }
 
     @Test
@@ -73,9 +73,9 @@ class AddressTest {
         Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable streetSetterExeption = () -> ny.setStreet("");
+        Executable streetSetterException = () -> ny.setStreet("");
 
         // then
-        assertThrows(IllegalArgumentException.class, streetSetterExeption);
+        assertThrows(IllegalArgumentException.class, streetSetterException);
     }
 }

@@ -19,33 +19,23 @@ public class Name {
      * @param lastName
      */
     public Name(String firstName, String secondName, String lastName) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.lastName = lastName;
+        setFirstName(firstName);
+        setSecondName(secondName);
+        setLastName(lastName);
     }
 
-    /**
-     * @param value     - Value which has to be validated
-     * @param fieldName - Name of the field whose setter we validate
-     */
-    private void setterValidator(String value, String fieldName) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Enter a valid " + fieldName + " name! It can't be null or empty!");
-        }
-    }
-
-    public void setFirstName(String firstName) {
-        setterValidator(firstName, "first name");
+    private void setFirstName(String firstName) {
+        Validator.getInstance().validateStringIsNotEmptyOrNull(firstName, "first name");
         this.firstName = firstName;
     }
 
-    public void setSecondName(String secondName) {
-        setterValidator(secondName, "second name");
+    private void setSecondName(String secondName) {
+        Validator.getInstance().validateStringIsNotEmptyOrNull(secondName, "second name");
         this.secondName = secondName;
     }
 
-    public void setLastName(String lastName) {
-        setterValidator(lastName, "last name");
+    private void setLastName(String lastName) {
+        Validator.getInstance().validateStringIsNotEmptyOrNull(lastName, "last name");
         this.lastName = lastName;
     }
 }

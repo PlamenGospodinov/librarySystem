@@ -1,5 +1,7 @@
 package eu.deltasource.internship.model.user;
 
+import eu.deltasource.internship.model.shared.Validator;
+
 /**
  * Address class which holds all the information about one's address
  */
@@ -13,38 +15,29 @@ public class Address {
 
     /**
      * Constructor for the Address class
+     *
      * @param country
      * @param city
      * @param street
      */
     public Address(String country, String city, String street) {
-        this.country = country;
-        this.city = city;
-        this.street = street;
-    }
-
-    /**
-     * @param value     - Value which has to be validated
-     * @param fieldName - Name of the field whose setter we validate
-     */
-    private void setterValidator(String value, String fieldName) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Enter a valid " + fieldName + " name! It can't be null or empty!");
-        }
+        setCountry(country);
+        setCity(city);
+        setStreet(street);
     }
 
     public void setCountry(String country) {
-        setterValidator(country, "country");
+        Validator.getInstance().validateStringIsNotEmptyOrNull(country, "country");
         this.country = country;
     }
 
     public void setCity(String city) {
-        setterValidator(city, "city");
+        Validator.getInstance().validateStringIsNotEmptyOrNull(city, "city");
         this.city = city;
     }
 
     public void setStreet(String street) {
-        setterValidator(street, "street");
+        Validator.getInstance().validateStringIsNotEmptyOrNull(street, "street");
         this.street = street;
     }
 }
