@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class NameTest {
 
     @Test
-    void testSetFirstNameToNullThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfFirstNameIsNull() {
         // given
 
         // when
@@ -19,7 +19,7 @@ class NameTest {
     }
 
     @Test
-    void testSetFirstNameToEmptyThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfFirstNameIsEmpty() {
         // given
 
         // when
@@ -30,7 +30,7 @@ class NameTest {
     }
 
     @Test
-    void testSetSecondNameToNullThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfSecondNameIsNull() {
         // given
 
         // when
@@ -41,9 +41,8 @@ class NameTest {
     }
 
     @Test
-    void testSetSecondNameToEmptyThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfSecondNameIsEmpty() {
         // given
-        Name gosho = new Name("Georgi", "Ivanov", "Ivanov");
 
         // when
         Executable secondNameSetterException = () -> new Name("Georgi", "", "Ivanov");
@@ -53,7 +52,7 @@ class NameTest {
     }
 
     @Test
-    void testSetLastNameToNullThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfLastNameIsNull() {
         // given
 
         // when
@@ -64,7 +63,7 @@ class NameTest {
     }
 
     @Test
-    void testSetLastNameToEmptyThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfLastNameIsEmpty() {
         // given
 
         // when

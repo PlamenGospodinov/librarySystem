@@ -8,7 +8,6 @@ import java.time.LocalDate;
 /**
  * Author class which holds all the needed information about a given author
  */
-//TODO Make Validation about dateOfBirth and dateOfDeath
 public class Author {
 
     private Name name;
@@ -27,6 +26,7 @@ public class Author {
     }
 
     private void setName(Name name) {
+        Validator.getInstance().validateObjectIsNotNull(name, "name");
         this.name = name;
     }
 
@@ -36,10 +36,16 @@ public class Author {
     }
 
     private void setDateOfBirth(LocalDate dateOfBirth) {
+        if (dateOfBirth == null) {
+            throw new IllegalArgumentException("Date of birth can't be null!");
+        }
         this.dateOfBirth = dateOfBirth;
     }
 
     private void setDateOfDeath(LocalDate dateOfDeath) {
+        if(dateOfDeath.isBefore(dateOfBirth)) {
+            throw new IllegalArgumentException("Date of death can't be before date of birth!");
+        }
         this.dateOfDeath = dateOfDeath;
     }
 }

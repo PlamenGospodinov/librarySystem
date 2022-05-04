@@ -29,7 +29,7 @@ public class PaperBook extends Book {
     }
 
     private void setTotalCopies(int totalCopies) {
-        Validator.getInstance().validateIntIsNotNegativeOrTooBig(totalCopies, "total copies");
+        Validator.getInstance().validateIntIsNotTooSmallOrTooBig(totalCopies, "total copies");
         this.totalCopies = totalCopies;
     }
 }

@@ -7,13 +7,16 @@ import java.util.List;
  */
 public class Validator {
 
-    private static final Validator INSTANCE = new Validator();
+    private static Validator INSTANCE;
 
     private Validator() {
 
     }
 
     public static Validator getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new Validator();
+        }
         return INSTANCE;
     }
 
@@ -47,11 +50,31 @@ public class Validator {
      * @param value     - Value which has to be validated
      * @param fieldName - Name of the field whose setter we validate
      */
-    public void validateIntIsNotNegativeOrTooBig(int value, String fieldName) {
-        if (value > 100) {
-            throw new IllegalArgumentException("Enter valid " + fieldName + " ! It can't be more than 100!");
-        } else if (value <= 0) {
-            throw new IllegalArgumentException("Enter valid " + fieldName + " ! It should be at least 1!");
+    public void validateIntIsNotTooSmallOrTooBig(int value, String fieldName) {
+        if(fieldName != "age") {
+            if (value > 100) {
+                throw new IllegalArgumentException("Enter valid " + fieldName + " ! It can't be more than 100!");
+            } else if (value <= 0) {
+                throw new IllegalArgumentException("Enter valid " + fieldName + " ! It should be at least 1!");
+            }
+        } else {
+            if (value > 130) {
+                throw new IllegalArgumentException("Enter valid " + fieldName + " ! It can't be more than 130!");
+            } else if (value <= 7) {
+                throw new IllegalArgumentException("Enter valid " + fieldName + " ! It should be at least 7!");
+            }
+        }
+    }
+
+    /**
+     * Validates objects setters
+     *
+     * @param object     - Object which has to be validated
+     * @param objectName - Name of the object
+     */
+    public void validateObjectIsNotNull(Object object, String objectName) {
+        if (object == null) {
+            throw new IllegalArgumentException("Enter a valid object of type " + objectName + "! It can't be null!");
         }
     }
 }

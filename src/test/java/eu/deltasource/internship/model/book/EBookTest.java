@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class EBookTest {
 
     @Test
-    void testSetLinkForReadingToNullThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfLinkForReadingIsNull() {
         // given
         Name name = new Name("Gosho","Goshev", "Goshev");
         LocalDate date = LocalDate.now();
@@ -35,7 +35,7 @@ class EBookTest {
     }
 
     @Test
-    void testSetLinkForReadingToEmptyThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfLinkForReadingIsEmpty() {
         // given
         Name name = new Name("Gosho","Goshev", "Goshev");
         LocalDate date = LocalDate.now();

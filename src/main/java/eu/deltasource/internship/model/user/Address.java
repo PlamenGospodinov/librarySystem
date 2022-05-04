@@ -26,17 +26,17 @@ public class Address {
         setStreet(street);
     }
 
-    public void setCountry(String country) {
+    private void setCountry(String country) {
         Validator.getInstance().validateStringIsNotEmptyOrNull(country, "country");
         this.country = country;
     }
 
-    public void setCity(String city) {
+    private void setCity(String city) {
         Validator.getInstance().validateStringIsNotEmptyOrNull(city, "city");
         this.city = city;
     }
 
-    public void setStreet(String street) {
+    private void setStreet(String street) {
         Validator.getInstance().validateStringIsNotEmptyOrNull(street, "street");
         this.street = street;
     }

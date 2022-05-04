@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BookTest {
 
     @Test
-    void setTitleToNullThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfTitleIsNull() {
         // given
         Name name = new Name("Gosho","Goshev", "Goshev");
         LocalDate date = LocalDate.now();
@@ -35,7 +35,7 @@ class BookTest {
     }
 
     @Test
-    void setTitleToEmptyThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfTitleIsEmpty() {
         // given
         Name name = new Name("Gosho","Goshev", "Goshev");
         LocalDate date = LocalDate.now();
@@ -57,7 +57,7 @@ class BookTest {
     }
 
     @Test
-    void setAuthorsToNullThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfAuthorsListIsNull() {
         // given
         List<Genre> genres = new ArrayList<>();
         List<String> tags = new ArrayList<>();
@@ -74,7 +74,7 @@ class BookTest {
     }
 
     @Test
-    void setGenresToNullThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfGenresListIsNull() {
         // given
         Name name = new Name("Gosho","Goshev", "Goshev");
         LocalDate date = LocalDate.now();
@@ -112,7 +112,7 @@ class BookTest {
     }
 
     @Test
-    void setSummaryToEmptyThrowsAnException() {
+    void testConstructorThrowsAnExceptionIfSummaryIsEmpty() {
         // given
         Name name = new Name("Gosho","Goshev", "Goshev");
         LocalDate date = LocalDate.now();
@@ -130,14 +130,67 @@ class BookTest {
         // then
         assertThrows(IllegalArgumentException.class, summarySetterException);
     }
-/*
+
     @Test
-    void setSummary() {
+    void testConstructorThrowsAnExceptionIfISBNIsEmpty() {
+        // given
+        Name name = new Name("Gosho","Goshev", "Goshev");
+        LocalDate date = LocalDate.now();
+        Author sb = new Author(name, "Bulgaria", date, date);
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<String> tags = new ArrayList<>();
+        authors.add(sb);
+        genres.add(Genre.ADVENTURE);
+        genres.add(Genre.SUSPENSE);
+        tags.add("popular");
+        // when
+        Executable isbnSetterException = () -> new EBook("Harry Potter", authors, genres, "Brief summary", "", tags, "https://somelink.com", null);
+
+        // then
+        assertThrows(IllegalArgumentException.class, isbnSetterException);
     }
 
     @Test
-    void setISBN() {
+    void testConstructorThrowsAnExceptionIfISBNIsNull() {
+        // given
+        Name name = new Name("Gosho","Goshev", "Goshev");
+        LocalDate date = LocalDate.now();
+        Author sb = new Author(name, "Bulgaria", date, date);
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<String> tags = new ArrayList<>();
+        authors.add(sb);
+        genres.add(Genre.ADVENTURE);
+        genres.add(Genre.SUSPENSE);
+        tags.add("popular");
+        // when
+        Executable isbnSetterException = () -> new EBook("Harry Potter", authors, genres, "", null, tags, "https://somelink.com", null);
+
+        // then
+        assertThrows(IllegalArgumentException.class, isbnSetterException);
     }
+
+    @Test
+    void testConstructorThrowsAnExceptionIfTagsListIsNull() {
+        // given
+        Name name = new Name("Gosho","Goshev", "Goshev");
+        LocalDate date = LocalDate.now();
+        Author sb = new Author(name, "Bulgaria", date, date);
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<String> tags = new ArrayList<>();
+        authors.add(sb);
+        genres.add(Genre.ADVENTURE);
+        genres.add(Genre.SUSPENSE);
+        tags.add("popular");
+        // when
+        Executable tagsSetterException = () -> new EBook("Harry Potter", authors, genres, "", "25-69-582", null, "https://somelink.com", null);
+
+        // then
+        assertThrows(IllegalArgumentException.class, tagsSetterException);
+    }
+/*
 
     @Test
     void setTags() {

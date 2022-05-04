@@ -47,7 +47,6 @@ class PaperBookTest {
         genres.add(Genre.ADVENTURE);
         genres.add(Genre.SUSPENSE);
         tags.add("popular");
-        PaperBook harryPotter = new PaperBook("Harry Potter", authors, genres, "Some summary", "15-9-8-45", tags, 99  );
 
         // when
         Executable totalCopiesSetterException = () -> new PaperBook("Harry Potter", authors, genres, "Some summary", "15-9-8-45", tags, -2);

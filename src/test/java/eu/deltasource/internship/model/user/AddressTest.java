@@ -8,72 +8,66 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class AddressTest {
 
     @Test
-    void testSetterValidationOfCountryThrowsAnExceptionIfItsNull() {
+    void testConstructorThrowsAnExceptionIfCountryIsNull() {
         // given
-        Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable countrySetterException = () -> ny.setCountry(null);
+        Executable countrySetterException = () -> new Address(null, "NY", "Times Square 26");
 
         // then
         assertThrows(IllegalArgumentException.class, countrySetterException);
     }
 
     @Test
-    void testSetterValidationOfCountryThrowsAnExceptionIfItsEmpty() {
+    void testConstructorThrowsAnExceptionIfCountryIsEmpty() {
         // given
-        Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable countrySetterException = () -> ny.setCountry("");
+        Executable countrySetterException = () -> new Address("", "NY", "Times Square 26");
 
         // then
         assertThrows(IllegalArgumentException.class, countrySetterException);
     }
 
     @Test
-    void testSetterValidationOfCityThrowsAnExceptionIfItsNull() {
+    void testConstructorThrowsAnExceptionIfCityIsNull() {
         // given
-        Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable citySetterException = () -> ny.setCity(null);
+        Executable citySetterException = () -> new Address("USA", null, "Times Square 26");
 
         // then
         assertThrows(IllegalArgumentException.class, citySetterException);
     }
 
     @Test
-    void testSetterValidationOfCityThrowsAnExceptionIfItsEmpty() {
+    void testConstructorThrowsAnExceptionIfCityIsEmpty() {
         // given
-        Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable citySetterException = () -> ny.setCity("");
+        Executable citySetterException = () -> new Address("USA", "", "Times Square 26");
 
         // then
         assertThrows(IllegalArgumentException.class, citySetterException);
     }
 
     @Test
-    void testSetterValidationOfStreetThrowsAnExceptionIfItsNull() {
+    void testConstructorThrowsAnExceptionIfStreetIsNull() {
         // given
-        Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable streetSetterException = () -> ny.setStreet(null);
+        Executable streetSetterException = () -> new Address("USA", "NY", null);
 
         // then
         assertThrows(IllegalArgumentException.class, streetSetterException);
     }
 
     @Test
-    void testSetterValidationOfStreetThrowsAnExceptionIfItsEmpty() {
+    void testConstructorThrowsAnExceptionIfStreetIsEmpty() {
         // given
-        Address ny = new Address("USA", "NY", "Times Square 26");
 
         // when
-        Executable streetSetterException = () -> ny.setStreet("");
+        Executable streetSetterException = () -> new Address("USA", "NY", "");
 
         // then
         assertThrows(IllegalArgumentException.class, streetSetterException);
