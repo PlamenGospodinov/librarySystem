@@ -22,8 +22,12 @@ public class PaperBookRepository {
         return INSTANCE;
     }
 
-    public void addBook(PaperBook book) {
-        paperBookList.add(book);
+    public boolean addBook(PaperBook book) {
+        if(!paperBookList.contains(book)) {
+            paperBookList.add(book);
+            return true;
+        }
+        return false;
     }
 
     public void removeBook(PaperBook book) {

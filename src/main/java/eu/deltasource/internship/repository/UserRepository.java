@@ -22,8 +22,12 @@ public final class UserRepository {
         return INSTANCE;
     }
 
-    public void addBook(User user) {
-        userList.add(user);
+    public boolean addBook(User user) {
+        if(!userList.contains(user)) {
+            userList.add(user);
+            return true;
+        }
+        return false;
     }
 
     public void removeBook(User user) {

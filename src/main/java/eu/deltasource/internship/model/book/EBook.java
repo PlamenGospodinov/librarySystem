@@ -1,9 +1,11 @@
 package eu.deltasource.internship.model.book;
 
 import eu.deltasource.internship.model.enumeration.Genre;
+import eu.deltasource.internship.model.enumeration.Tag;
 import eu.deltasource.internship.model.shared.Validator;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Ebook class which extends the base Book class and has link for reading and downloading in addition
@@ -26,7 +28,7 @@ public class EBook extends Book{
      * @param linkForReading - Link for reading
      * @param linkForDownloading - Link for downloading
      */
-    public EBook(String title, List<Author> authors, List<Genre> genres, String summary, String ISBN, List<String> tags, String linkForReading, String linkForDownloading) {
+    public EBook(String title, List<Author> authors, List<Genre> genres, String summary, String ISBN, List<Tag> tags, String linkForReading, String linkForDownloading) {
         super(title, authors, genres, summary, ISBN, tags);
         setLinkForReading(linkForReading);
         setLinkForDownloading(linkForDownloading);
@@ -39,5 +41,19 @@ public class EBook extends Book{
 
     private void setLinkForDownloading(String linkForDownloading) {
         this.linkForDownloading = linkForDownloading;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        EBook eBook = (EBook) o;
+        return linkForReading.equals(eBook.linkForReading) && Objects.equals(linkForDownloading, eBook.linkForDownloading);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), linkForReading, linkForDownloading);
     }
 }

@@ -22,8 +22,12 @@ public final class AuthorRepository {
         return INSTANCE;
     }
 
-    public void addAuthor(Author author) {
-        authorList.add(author);
+    public boolean addAuthor(Author author) {
+        if(!authorList.contains(author)) {
+            authorList.add(author);
+            return true;
+        }
+        return false;
     }
 
     public void removeAuthor(Author author) {

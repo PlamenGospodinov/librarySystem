@@ -1,10 +1,12 @@
 package eu.deltasource.internship.model.book;
 
 import eu.deltasource.internship.model.enumeration.Genre;
+import eu.deltasource.internship.model.enumeration.Tag;
 import eu.deltasource.internship.model.shared.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Base Book class which will be used for the creation of paper books and e-books
@@ -21,7 +23,7 @@ public abstract class Book {
 
     protected String ISBN;
 
-    protected List<String> tags;
+    protected List<Tag> tags;
 
     /**
      * Constructor for the book class
@@ -33,7 +35,7 @@ public abstract class Book {
      * @param ISBN - International Standard Book Number
      * @param tags - List of book tags
      */
-    public Book(String title, List<Author> authors, List<Genre> genres, String summary, String ISBN, List<String> tags) {
+    public Book(String title, List<Author> authors, List<Genre> genres, String summary, String ISBN, List<Tag> tags) {
         setTitle(title);
         setAuthors(authors);
         setGenres(genres);
@@ -67,8 +69,21 @@ public abstract class Book {
         this.ISBN = ISBN;
     }
 
-    private void setTags(List<String> tags) {
+    private void setTags(List<Tag> tags) {
         Validator.getInstance().validateListIsNotNull(tags, "tags");
         this.tags = tags;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return title.equals(book.title) && authors.equals(book.authors) && genres.equals(book.genres) && summary.equals(book.summary) && ISBN.equals(book.ISBN) && tags.equals(book.tags);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, authors, genres, summary, ISBN, tags);
     }
 }

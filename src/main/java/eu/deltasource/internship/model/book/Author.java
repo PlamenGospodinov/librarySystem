@@ -4,6 +4,7 @@ import eu.deltasource.internship.model.shared.Name;
 import eu.deltasource.internship.model.shared.Validator;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Author class which holds all the needed information about a given author
@@ -47,5 +48,18 @@ public class Author {
             throw new IllegalArgumentException("Date of death can't be before date of birth!");
         }
         this.dateOfDeath = dateOfDeath;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return name.equals(author.name) && country.equals(author.country) && dateOfBirth.equals(author.dateOfBirth) && Objects.equals(dateOfDeath, author.dateOfDeath);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, country, dateOfBirth, dateOfDeath);
     }
 }

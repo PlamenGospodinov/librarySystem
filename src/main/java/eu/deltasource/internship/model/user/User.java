@@ -5,6 +5,8 @@ import eu.deltasource.internship.model.enumeration.Sex;
 import eu.deltasource.internship.model.shared.Name;
 import eu.deltasource.internship.model.shared.Validator;
 
+import java.util.Objects;
+
 /**
  * User class where we will store the data for each of our users
  */
@@ -89,5 +91,18 @@ public class User {
             throw new IllegalArgumentException("You can't have eugdpr set to false!");
         }
         this.eugdpr = eugdpr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return age == user.age && eugdpr == user.eugdpr && names.equals(user.names) && credentials.equals(user.credentials) && address.equals(user.address) && sex == user.sex && role == user.role && email.equals(user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(names, credentials, address, age, sex, role, email, eugdpr);
     }
 }

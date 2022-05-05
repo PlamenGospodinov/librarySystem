@@ -1,6 +1,7 @@
 package eu.deltasource.internship.model.book;
 
 import eu.deltasource.internship.model.enumeration.Genre;
+import eu.deltasource.internship.model.enumeration.Tag;
 import eu.deltasource.internship.model.shared.Name;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -21,11 +22,11 @@ class PaperBookTest {
         Author sb = new Author(name, "Bulgaria", date, date);
         List<Author> authors = new ArrayList<>();
         List<Genre> genres = new ArrayList<>();
-        List<String> tags = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
         authors.add(sb);
         genres.add(Genre.ADVENTURE);
         genres.add(Genre.SUSPENSE);
-        tags.add("popular");
+        tags.add(Tag.POPULAR);
 
         // when
         Executable totalCopiesSetterException = () -> new PaperBook("Harry Potter", authors, genres, "Some summary", "15-9-8-45", tags, 101);
@@ -42,11 +43,11 @@ class PaperBookTest {
         Author sb = new Author(name, "Bulgaria", date, date);
         List<Author> authors = new ArrayList<>();
         List<Genre> genres = new ArrayList<>();
-        List<String> tags = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
         authors.add(sb);
         genres.add(Genre.ADVENTURE);
         genres.add(Genre.SUSPENSE);
-        tags.add("popular");
+        tags.add(Tag.POPULAR);
 
         // when
         Executable totalCopiesSetterException = () -> new PaperBook("Harry Potter", authors, genres, "Some summary", "15-9-8-45", tags, -2);

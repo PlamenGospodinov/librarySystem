@@ -22,8 +22,12 @@ public class EBookRepository {
         return INSTANCE;
     }
 
-    public void addBook(EBook book) {
-        eBookList.add(book);
+    public boolean addBook(EBook book) {
+        if(!eBookList.contains(book)) {
+            eBookList.add(book);
+            return true;
+        }
+        return false;
     }
 
     public void removeBook(EBook book) {

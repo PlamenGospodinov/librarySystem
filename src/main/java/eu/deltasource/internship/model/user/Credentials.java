@@ -2,6 +2,8 @@ package eu.deltasource.internship.model.user;
 
 import eu.deltasource.internship.model.shared.Validator;
 
+import java.util.Objects;
+
 public class Credentials {
 
     private String username;
@@ -21,5 +23,18 @@ public class Credentials {
     private void setPassword(String password) {
         Validator.getInstance().validateStringIsNotEmptyOrNull(password, "password");
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Credentials that = (Credentials) o;
+        return username.equals(that.username) && password.equals(that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password);
     }
 }

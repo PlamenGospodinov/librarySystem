@@ -1,5 +1,7 @@
 package eu.deltasource.internship.model.shared;
 
+import java.util.Objects;
+
 /**
  * Name class which can be used from both Author and User to store all names
  */
@@ -37,5 +39,18 @@ public class Name {
     private void setLastName(String lastName) {
         Validator.getInstance().validateStringIsNotEmptyOrNull(lastName, "last name");
         this.lastName = lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Name name = (Name) o;
+        return firstName.equals(name.firstName) && secondName.equals(name.secondName) && lastName.equals(name.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, secondName, lastName);
     }
 }

@@ -20,10 +20,28 @@ class AuthorRepositoryTest {
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
 
         // when
-        authorRepoInstance.addAuthor(IvanVazov);
+        boolean successfulAdd = authorRepoInstance.addAuthor(IvanVazov);
 
         // then
         assertEquals(1, authorRepoInstance.getAuthorList().size());
+        assertTrue(successfulAdd);
+        authorRepoInstance.removeAuthor(IvanVazov);
+    }
+
+    @Test
+    void testAddDuplicateAuthorReturnsFalse() {
+        // given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
+        boolean successfulAdd = authorRepoInstance.addAuthor(IvanVazov);
+
+        // when
+        boolean failedAdd = authorRepoInstance.addAuthor(IvanVazov);
+
+        // then
+        assertEquals(1, authorRepoInstance.getAuthorList().size());
+        assertTrue(successfulAdd);
+        assertFalse(failedAdd);
         authorRepoInstance.removeAuthor(IvanVazov);
     }
 
