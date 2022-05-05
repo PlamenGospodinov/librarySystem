@@ -2,6 +2,7 @@ package eu.deltasource.internship.repository;
 
 import eu.deltasource.internship.model.book.Author;
 import eu.deltasource.internship.model.book.EBook;
+import eu.deltasource.internship.model.book.PaperBook;
 import eu.deltasource.internship.model.enumeration.Genre;
 import eu.deltasource.internship.model.enumeration.Tag;
 import eu.deltasource.internship.model.shared.Name;
@@ -13,12 +14,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EBookRepositoryTest {
-
-    EBookRepository eBookRepoInstance = EBookRepository.getInstance();
+class PaperBookRepositoryTest {
+    PaperBookRepository paperBookRepoInstance = PaperBookRepository.getInstance();
 
     @Test
-    void testAddAnEBookSuccessfully() {
+    void testAddAPaperBookSuccessfully() {
         // given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
@@ -29,19 +29,19 @@ class EBookRepositoryTest {
         genres.add(Genre.DETECTIVE);
         authors.add(IvanVazov);
         tags.add(Tag.BOOK);
-        EBook HarryPotter = new EBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
+        PaperBook HarryPotter = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 2);
 
         // when
-        boolean successfulAdd = eBookRepoInstance.addBook(HarryPotter);
+        boolean successfulAdd = paperBookRepoInstance.addBook(HarryPotter);
 
         // then
-        assertEquals(1, eBookRepoInstance.getEBooks().size());
+        assertEquals(1, paperBookRepoInstance.getPaperBooks().size());
         assertTrue(successfulAdd);
-        eBookRepoInstance.removeBook(HarryPotter);
+        paperBookRepoInstance.removeBook(HarryPotter);
     }
 
     @Test
-    void testAddAnEBookDuplicateReturnsFalse() {
+    void testAddAPaperBookDuplicateReturnsFalse() {
         // given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
@@ -52,21 +52,21 @@ class EBookRepositoryTest {
         genres.add(Genre.DETECTIVE);
         authors.add(IvanVazov);
         tags.add(Tag.BOOK);
-        EBook HarryPotter = new EBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
-        boolean successfulAdd = eBookRepoInstance.addBook(HarryPotter);
+        PaperBook HarryPotter = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 2);
+        boolean successfulAdd = paperBookRepoInstance.addBook(HarryPotter);
 
         // when
-        boolean failedAdd = eBookRepoInstance.addBook(HarryPotter);
+        boolean failedAdd = paperBookRepoInstance.addBook(HarryPotter);
 
         // then
-        assertEquals(1, eBookRepoInstance.getEBooks().size());
+        assertEquals(1, paperBookRepoInstance.getPaperBooks().size());
         assertTrue(successfulAdd);
         assertFalse(failedAdd);
-        eBookRepoInstance.removeBook(HarryPotter);
+        paperBookRepoInstance.removeBook(HarryPotter);
     }
 
     @Test
-    void testRemoveAnEBookSuccessfully() {
+    void testRemovePaperBookSuccessfully() {
         // given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
@@ -77,18 +77,18 @@ class EBookRepositoryTest {
         genres.add(Genre.DETECTIVE);
         authors.add(IvanVazov);
         tags.add(Tag.BOOK);
-        EBook HarryPotter = new EBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
-        eBookRepoInstance.addBook(HarryPotter);
+        PaperBook HarryPotter = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 2);
+        paperBookRepoInstance.addBook(HarryPotter);
 
         // when
-        eBookRepoInstance.removeBook(HarryPotter);
+        paperBookRepoInstance.removeBook(HarryPotter);
 
         // then
-        assertEquals(0, eBookRepoInstance.getEBooks().size());
+        assertEquals(0, paperBookRepoInstance.getPaperBooks().size());
     }
 
     @Test
-    void testGetEBookListSuccessfully() {
+    void testGetPaperBookListSuccessfully() {
         // given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
@@ -99,14 +99,14 @@ class EBookRepositoryTest {
         genres.add(Genre.DETECTIVE);
         authors.add(IvanVazov);
         tags.add(Tag.BOOK);
-        EBook HarryPotter = new EBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
-        eBookRepoInstance.addBook(HarryPotter);
+        PaperBook HarryPotter = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 2);
+        paperBookRepoInstance.addBook(HarryPotter);
 
         // when
-        List<EBook> eBooks = eBookRepoInstance.getEBooks();
+        List<PaperBook> paperBooks = paperBookRepoInstance.getPaperBooks();
 
         // then
-        assertEquals(eBooks.get(0), HarryPotter);
-        eBookRepoInstance.removeBook(HarryPotter);
+        assertEquals(paperBooks.get(0), HarryPotter);
+        paperBookRepoInstance.removeBook(HarryPotter);
     }
 }
