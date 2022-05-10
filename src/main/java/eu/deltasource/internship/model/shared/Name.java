@@ -2,8 +2,10 @@ package eu.deltasource.internship.model.shared;
 
 import java.util.Objects;
 
+import static eu.deltasource.internship.model.shared.Validator.validator;
+
 /**
- * Name class which can be used from both Author and User to store all names
+ * Used from both Author and User to store all names
  */
 public class Name {
 
@@ -27,17 +29,17 @@ public class Name {
     }
 
     private void setFirstName(String firstName) {
-        Validator.getInstance().validateStringIsNotEmptyOrNull(firstName, "first name");
+        validator.validateStringIsNotEmptyOrNull(firstName, "first name");
         this.firstName = firstName;
     }
 
     private void setSecondName(String secondName) {
-        Validator.getInstance().validateStringIsNotEmptyOrNull(secondName, "second name");
+        validator.validateStringIsNotEmptyOrNull(secondName, "second name");
         this.secondName = secondName;
     }
 
     private void setLastName(String lastName) {
-        Validator.getInstance().validateStringIsNotEmptyOrNull(lastName, "last name");
+        validator.validateStringIsNotEmptyOrNull(lastName, "last name");
         this.lastName = lastName;
     }
 

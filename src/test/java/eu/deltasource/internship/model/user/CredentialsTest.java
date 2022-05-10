@@ -8,46 +8,58 @@ import static org.junit.jupiter.api.Assertions.*;
 class CredentialsTest {
 
     @Test
-    void testConstructorThrowsAnExceptionIfUsernameIsNull() {
-        // given
+    void testShouldCreateUsernameSuccessfully() {
+        // Given
+        Credentials credentials0 = new Credentials(null, "wjdiawd454wfafa");
 
-        // when
+        // When
+        Credentials credentials1 = new Credentials(null, "wjdiawd454wfafa");
+
+        // Then
+        assertEquals(credentials0, credentials1);
+    }
+
+    @Test
+    void testConstructorThrowsAnExceptionIfUsernameIsNull() {
+        // Given
+
+        // When
         Executable usernameSetterException = () -> new Credentials(null, "wjdiawd454wfafa");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, usernameSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfUsernameIsEmpty() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable usernameSetterException = () -> new Credentials("", "wjdiawd454wfafa");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, usernameSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfPasswordIsNull() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable passwordSetterException = () -> new Credentials("Wolverine", null);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, passwordSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfPasswordIsEmpty() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable passwordSetterException = () -> new Credentials("Wolverine", "");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, passwordSetterException);
     }
 }

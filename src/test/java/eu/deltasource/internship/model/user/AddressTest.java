@@ -3,73 +3,86 @@ package eu.deltasource.internship.model.user;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AddressTest {
 
     @Test
-    void testConstructorThrowsAnExceptionIfCountryIsNull() {
-        // given
+    void testShouldCreateAddressSuccessfully() {
+        // Given
+        Address address0 = new Address("Bulgaria", "NY", "Times Square 26");
 
-        // when
+        // When
+        Address address1 = new Address("Bulgaria", "NY", "Times Square 26");
+
+        // Then
+        assertEquals(address0, address1);
+    }
+
+    @Test
+    void testConstructorThrowsAnExceptionIfCountryIsNull() {
+        // Given
+
+        // When
         Executable countrySetterException = () -> new Address(null, "NY", "Times Square 26");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, countrySetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfCountryIsEmpty() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable countrySetterException = () -> new Address("", "NY", "Times Square 26");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, countrySetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfCityIsNull() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable citySetterException = () -> new Address("USA", null, "Times Square 26");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, citySetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfCityIsEmpty() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable citySetterException = () -> new Address("USA", "", "Times Square 26");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, citySetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfStreetIsNull() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable streetSetterException = () -> new Address("USA", "NY", null);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, streetSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfStreetIsEmpty() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable streetSetterException = () -> new Address("USA", "NY", "");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, streetSetterException);
     }
 }

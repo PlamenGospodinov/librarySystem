@@ -7,8 +7,10 @@ import eu.deltasource.internship.model.shared.Validator;
 import java.util.List;
 import java.util.Objects;
 
+import static eu.deltasource.internship.model.shared.Validator.validator;
+
 /**
- * Ebook class which extends the base Book class and has link for reading and downloading in addition
+ * Extends the base Book class and has link for reading and downloading in addition
  */
 public class EBook extends Book{
 
@@ -23,19 +25,19 @@ public class EBook extends Book{
      * @param authors - List of book authors
      * @param genres - list of book genres
      * @param summary - A little summary of the book
-     * @param ISBN - International Standard Book Number
+     * @param isbn - International Standard Book Number
      * @param tags - List of book tags
      * @param linkForReading - Link for reading
      * @param linkForDownloading - Link for downloading
      */
-    public EBook(String title, List<Author> authors, List<Genre> genres, String summary, String ISBN, List<Tag> tags, String linkForReading, String linkForDownloading) {
-        super(title, authors, genres, summary, ISBN, tags);
+    public EBook(String title, List<Author> authors, List<Genre> genres, String summary, String isbn, List<Tag> tags, String linkForReading, String linkForDownloading) {
+        super(title, authors, genres, summary, isbn, tags);
         setLinkForReading(linkForReading);
         setLinkForDownloading(linkForDownloading);
     }
 
     private void setLinkForReading(String linkForReading) {
-        Validator.getInstance().validateStringIsNotEmptyOrNull(linkForReading, "link for reading");
+        validator.validateStringIsNotEmptyOrNull(linkForReading, "link for reading");
         this.linkForReading = linkForReading;
     }
 

@@ -9,6 +9,8 @@ public class Validator {
 
     private static Validator INSTANCE;
 
+    public static Validator validator = Validator.getInstance();
+
     private Validator() {
 
     }
@@ -50,8 +52,8 @@ public class Validator {
      * @param value     - Value which has to be validated
      * @param fieldName - Name of the field whose setter we validate
      */
-    public void validateIntIsNotTooSmallOrTooBig(int value, String fieldName) {
-        if(fieldName != "age") {
+    public void validateAgeOrNumberOfTotalCopies(int value, String fieldName) {
+        if(!fieldName.equals("age")) {
             if (value > 100) {
                 throw new IllegalArgumentException("Enter valid " + fieldName + " ! It can't be more than 100!");
             } else if (value <= 0) {

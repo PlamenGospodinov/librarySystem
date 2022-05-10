@@ -1,13 +1,14 @@
 package eu.deltasource.internship.model.book;
 
 import eu.deltasource.internship.model.shared.Name;
-import eu.deltasource.internship.model.shared.Validator;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+import static eu.deltasource.internship.model.shared.Validator.validator;
+
 /**
- * Author class which holds all the needed information about a given author
+ * Holds all the needed information about a given author
  */
 public class Author {
 
@@ -27,18 +28,21 @@ public class Author {
     }
 
     private void setName(Name name) {
-        Validator.getInstance().validateObjectIsNotNull(name, "name");
+        validator.validateObjectIsNotNull(name, "name");
         this.name = name;
     }
 
     private void setCountry(String country) {
-        Validator.getInstance().validateStringIsNotEmptyOrNull(country, "country");
+        validator.validateStringIsNotEmptyOrNull(country, "country");
         this.country = country;
     }
 
     private void setDateOfBirth(LocalDate dateOfBirth) {
         if (dateOfBirth == null) {
             throw new IllegalArgumentException("Date of birth can't be null!");
+        }
+        if(dateOfBirth.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Date of birth can't be in the future!");
         }
         this.dateOfBirth = dateOfBirth;
     }

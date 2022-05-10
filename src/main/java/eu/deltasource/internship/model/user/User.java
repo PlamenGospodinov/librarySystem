@@ -7,8 +7,10 @@ import eu.deltasource.internship.model.shared.Validator;
 
 import java.util.Objects;
 
+import static eu.deltasource.internship.model.shared.Validator.validator;
+
 /**
- * User class where we will store the data for each of our users
+ * Stores the data for each of our users
  */
 public class User {
 
@@ -52,37 +54,37 @@ public class User {
     }
 
     private void setNames(Name names) {
-        Validator.getInstance().validateObjectIsNotNull(names,"names");
+        validator.validateObjectIsNotNull(names,"names");
         this.names = names;
     }
 
     private void setCredentials(Credentials credentials) {
-        Validator.getInstance().validateObjectIsNotNull(credentials,"credentials");
+        validator.validateObjectIsNotNull(credentials,"credentials");
         this.credentials = credentials;
     }
 
     private void setAddress(Address address) {
-        Validator.getInstance().validateObjectIsNotNull(address,"address");
+        validator.validateObjectIsNotNull(address,"address");
         this.address = address;
     }
 
     private void setAge(int age) {
-        Validator.getInstance().validateIntIsNotTooSmallOrTooBig(age, "age");
+        validator.validateAgeOrNumberOfTotalCopies(age, "age");
         this.age = age;
     }
 
     private void setSex(Sex sex) {
-        Validator.getInstance().validateObjectIsNotNull(sex,"sex");
+        validator.validateObjectIsNotNull(sex,"sex");
         this.sex = sex;
     }
 
     private void setRole(Role role) {
-        Validator.getInstance().validateObjectIsNotNull(role,"role");
+        validator.validateObjectIsNotNull(role,"role");
         this.role = role;
     }
 
     private void setEmail(String email) {
-        Validator.getInstance().validateStringIsNotEmptyOrNull(email, "email");
+        validator.validateStringIsNotEmptyOrNull(email, "email");
         this.email = email;
     }
 

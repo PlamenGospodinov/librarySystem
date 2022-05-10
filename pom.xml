@@ -10,15 +10,14 @@
 
 
     <properties>
-        <jUnitVersion>5.8.2</jUnitVersion>
-        <mavenCompilerTargetAndSource>17</mavenCompilerTargetAndSource>
+        <junit.version>5.8.2</junit.version>
     </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>${jUnitVersion}</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

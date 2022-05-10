@@ -11,126 +11,141 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserTest {
 
     @Test
+    void testShouldCreateUserSuccessfully() {
+        // Given
+        Credentials credentials = new Credentials("Ivancho","erws5s4fwf56sd");
+        Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
+        Name names = new Name("Pesho", "Dimitrov", "Stefanov");
+        User user0 = new User(names,credentials,address,18, Sex.MALE, Role.REGULAR,"blabla@abv.bg",true);
+
+        // When
+        User user1 = new User(names,credentials,address,18, Sex.MALE, Role.REGULAR,"blabla@abv.bg",true);
+
+        // Then
+        assertEquals(user0, user1);
+    }
+
+    @Test
     void testConstructorThrowsAnExceptionIfNamesAreNull() {
-        // given
+        // Given
         Credentials credentials = new Credentials("Ivancho","erws5s4fwf56sd");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
-        // when
+        // When
         Executable namesSetterException = () -> new User(null,credentials,address,18, Sex.MALE, Role.REGULAR,"blabla@abv.bg",true);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, namesSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfCredentialsAreNull() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
-        // when
+        // When
         Executable credentialsSetterException = () -> new User(name,null, address,18, Sex.MALE, Role.REGULAR,"blabla@abv.bg",true);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, credentialsSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfAgeIsLessThan7() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
         Credentials credentials = new Credentials("Ivancho","erws5s4fwf56sd");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
-        // when
+        // When
         Executable ageSetterException = () -> new User(name, credentials, address,6, Sex.MALE, Role.REGULAR,"blabla@abv.bg",true);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, ageSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfAgeIsMoreThan130() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
         Credentials credentials = new Credentials("Ivancho","erws5s4fwf56sd");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
-        // when
+        // When
         Executable ageSetterException = () -> new User(name, credentials, address,131, Sex.MALE, Role.REGULAR,"blabla@abv.bg",true);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, ageSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfSexIsNull() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
         Credentials credentials = new Credentials("Ivancho","erws5s4fwf56sd");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
-        // when
+        // When
         Executable sexSetterException = () -> new User(name, credentials, address,13, null, Role.REGULAR,"blabla@abv.bg",true);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, sexSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfRoleIsNull() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
         Credentials credentials = new Credentials("Ivancho","erws5s4fwf56sd");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
-        // when
+        // When
         Executable roleSetterException = () -> new User(name, credentials, address,13, Sex.MALE, null,"blabla@abv.bg",true);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, roleSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfEmailIsNull() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
         Credentials credentials = new Credentials("Ivancho","erws5s4fwf56sd");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
-        // when
+        // When
         Executable emailSetterException = () -> new User(name, credentials, address,13, Sex.MALE, Role.REGULAR,null,true);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, emailSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfEmailIsBlank() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
         Credentials credentials = new Credentials("Ivancho","erws5s4fwf56sd");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
-        // when
+        // When
         Executable emailSetterException = () -> new User(name, credentials, address,13, Sex.MALE, Role.REGULAR,"",true);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, emailSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfEUGDPRIsFalse() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
         Credentials credentials = new Credentials("Ivancho","erws5s4fwf56sd");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
-        // when
+        // When
         Executable emailSetterException = () -> new User(name, credentials, address,11, Sex.MALE, Role.REGULAR,"null",false);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, emailSetterException);
     }
 }

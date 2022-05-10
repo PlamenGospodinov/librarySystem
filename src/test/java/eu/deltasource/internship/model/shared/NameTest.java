@@ -8,68 +8,80 @@ import static org.junit.jupiter.api.Assertions.*;
 class NameTest {
 
     @Test
-    void testConstructorThrowsAnExceptionIfFirstNameIsNull() {
-        // given
+    void testShouldCreateNameSuccessfully() {
+        // Given
+        Name Ivan = new Name("Ivan", "Ivanov", "Ivanov");
 
-        // when
+        // When
+        Name Ivan1 = new Name("Ivan", "Ivanov", "Ivanov");
+
+        // Then
+        assertEquals(Ivan, Ivan1);
+    }
+
+    @Test
+    void testConstructorThrowsAnExceptionIfFirstNameIsNull() {
+        // Given
+
+        // When
         Executable firstNameSetterException = () -> new Name(null, "Ivanov", "Ivanov");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, firstNameSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfFirstNameIsEmpty() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable firstNameSetterException = () -> new Name("", "Ivanov", "Ivanov");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, firstNameSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfSecondNameIsNull() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable secondNameSetterException = () -> new Name("Georgi", null, "Ivanov");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, secondNameSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfSecondNameIsEmpty() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable secondNameSetterException = () -> new Name("Georgi", "", "Ivanov");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, secondNameSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfLastNameIsNull() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable lastNameSetterException = () -> new Name("Georgi", "Ivanov", null);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, lastNameSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfLastNameIsEmpty() {
-        // given
+        // Given
 
-        // when
+        // When
         Executable lastNameSetterException = () -> new Name("Georgi", "Ivanov", "");
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, lastNameSetterException);
     }
 }

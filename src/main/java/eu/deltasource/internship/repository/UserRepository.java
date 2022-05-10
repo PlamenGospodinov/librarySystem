@@ -2,18 +2,15 @@ package eu.deltasource.internship.repository;
 
 import eu.deltasource.internship.model.user.User;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
- * A repository for the users
+ * Stores the users and allows different operations with them
  */
 public final class UserRepository {
 
-    private final List<User> userList = new ArrayList<>();
-
     private static final UserRepository INSTANCE = new UserRepository();
+    private final Set<User> userList = new HashSet<>();
 
     private UserRepository() {
     }
@@ -22,19 +19,23 @@ public final class UserRepository {
         return INSTANCE;
     }
 
-    public boolean addBook(User user) {
-        if(!userList.contains(user)) {
+    public boolean add(User user) {
+        if (!userList.contains(user)) {
             userList.add(user);
             return true;
         }
         return false;
     }
 
-    public void removeBook(User user) {
+    public void remove(User user) {
         userList.remove(user);
     }
 
-    public List<User> getUsers() {
-        return Collections.unmodifiableList(userList);
+    public void clearRepository() {
+        userList.clear();
+    }
+
+    public Set<User> getList() {
+        return Collections.unmodifiableSet(userList);
     }
 }

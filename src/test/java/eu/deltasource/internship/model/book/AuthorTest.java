@@ -6,75 +6,91 @@ import org.junit.jupiter.api.function.Executable;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AuthorTest {
 
     @Test
-    void testConstructorThrowsAnExceptionIfNamesAreNull() {
-        // given
-        LocalDate dateOfBirth = LocalDate.of(1955,5,25);
-        LocalDate dateOfDeath = LocalDate.of(2015,7,2);
+    void testShouldCreateAuthorSuccessfully() {
+        // Given
+        Name name = new Name("Ivan", "Ivanov", "Ivanov");
+        LocalDate dateOfBirth = LocalDate.of(1955, 5, 25);
+        LocalDate dateOfDeath = LocalDate.of(2015, 7, 2);
+        Author Goshko = new Author(name, "Germany", dateOfBirth, dateOfDeath);
 
-        // when
+        // When
+        Author Vanko = new Author(name, "Germany", dateOfBirth, dateOfDeath);
+
+        // Then
+        assertEquals(Goshko, Vanko);
+    }
+
+    @Test
+    void testConstructorThrowsAnExceptionIfNamesAreNull() {
+        // Given
+        LocalDate dateOfBirth = LocalDate.of(1955, 5, 25);
+        LocalDate dateOfDeath = LocalDate.of(2015, 7, 2);
+
+        // When
         Executable namesSetterException = () -> new Author(null, "Germany", dateOfBirth, dateOfDeath);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, namesSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfCountryIsNull() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
-        LocalDate dateOfBirth = LocalDate.of(1955,5,25);
-        LocalDate dateOfDeath = LocalDate.of(2015,7,2);
+        LocalDate dateOfBirth = LocalDate.of(1955, 5, 25);
+        LocalDate dateOfDeath = LocalDate.of(2015, 7, 2);
 
-        // when
+        // When
         Executable countrySetterException = () -> new Author(name, null, dateOfBirth, dateOfDeath);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, countrySetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfCountryIsBlank() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
-        LocalDate dateOfBirth = LocalDate.of(1955,5,25);
-        LocalDate dateOfDeath = LocalDate.of(2015,7,2);
+        LocalDate dateOfBirth = LocalDate.of(1955, 5, 25);
+        LocalDate dateOfDeath = LocalDate.of(2015, 7, 2);
 
-        // when
+        // When
         Executable countrySetterException = () -> new Author(name, "", dateOfBirth, dateOfDeath);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, countrySetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfDateOfBirthIsNull() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
-        LocalDate dateOfDeath = LocalDate.of(2015,7,2);
+        LocalDate dateOfDeath = LocalDate.of(2015, 7, 2);
 
-        // when
+        // When
         Executable dateOfBirthSetterException = () -> new Author(name, "Germany", null, dateOfDeath);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, dateOfBirthSetterException);
     }
 
     @Test
     void testConstructorThrowsAnExceptionIfDateOfDeathIsBeforeDateOfBirth() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Ivanov", "Ivanov");
-        LocalDate dateOfBirth = LocalDate.of(1955,5,25);
-        LocalDate dateOfDeath = LocalDate.of(1915,7,2);
+        LocalDate dateOfBirth = LocalDate.of(1955, 5, 25);
+        LocalDate dateOfDeath = LocalDate.of(1915, 7, 2);
 
-        // when
+        // When
         Executable dateOfDeathSetterException = () -> new Author(name, "Germany", dateOfBirth, dateOfDeath);
 
-        // then
+        // Then
         assertThrows(IllegalArgumentException.class, dateOfDeathSetterException);
     }
 }

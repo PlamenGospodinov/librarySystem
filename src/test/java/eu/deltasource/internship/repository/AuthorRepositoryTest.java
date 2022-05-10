@@ -2,10 +2,12 @@ package eu.deltasource.internship.repository;
 
 import eu.deltasource.internship.model.book.Author;
 import eu.deltasource.internship.model.shared.Name;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,64 +15,66 @@ class AuthorRepositoryTest {
 
     AuthorRepository authorRepoInstance = AuthorRepository.getInstance();
 
+    @AfterEach
+    void clearAuthorRepo() {
+        authorRepoInstance.clearRepository();
+    }
+
     @Test
     void testAddAuthorSuccessfully() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
 
-        // when
-        boolean successfulAdd = authorRepoInstance.addAuthor(IvanVazov);
+        // When
+        boolean successfulAdd = authorRepoInstance.add(IvanVazov);
 
-        // then
-        assertEquals(1, authorRepoInstance.getAuthorList().size());
+        // Then
+        assertEquals(1, authorRepoInstance.getList().size());
         assertTrue(successfulAdd);
-        authorRepoInstance.removeAuthor(IvanVazov);
     }
 
     @Test
     void testAddDuplicateAuthorReturnsFalse() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
-        boolean successfulAdd = authorRepoInstance.addAuthor(IvanVazov);
+        boolean successfulAdd = authorRepoInstance.add(IvanVazov);
 
-        // when
-        boolean failedAdd = authorRepoInstance.addAuthor(IvanVazov);
+        // When
+        boolean failedAdd = authorRepoInstance.add(IvanVazov);
 
-        // then
-        assertEquals(1, authorRepoInstance.getAuthorList().size());
+        // Then
+        assertEquals(1, authorRepoInstance.getList().size());
         assertTrue(successfulAdd);
         assertFalse(failedAdd);
-        authorRepoInstance.removeAuthor(IvanVazov);
     }
 
     @Test
     void testRemoveAuthorSuccessfully() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
-        authorRepoInstance.addAuthor(IvanVazov);
+        authorRepoInstance.add(IvanVazov);
 
-        // when
-        authorRepoInstance.removeAuthor(IvanVazov);
+        // When
+        authorRepoInstance.remove(IvanVazov);
 
-        // then
-        assertEquals(0, authorRepoInstance.getAuthorList().size());
+        // Then
+        assertEquals(0, authorRepoInstance.getList().size());
     }
 
     @Test
     void testGetAuthorListSuccessfully() {
-        // given
+        // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
-        authorRepoInstance.addAuthor(IvanVazov);
+        authorRepoInstance.add(IvanVazov);
 
-        // when
-        List<Author> authors = authorRepoInstance.getAuthorList();
+        // When
+        Set<Author> authors = authorRepoInstance.getList();
 
-        // then
-        assertEquals(authors.get(0), IvanVazov);
-        authorRepoInstance.removeAuthor(IvanVazov);
+        // Then
+        assertTrue(authors.contains(IvanVazov));
     }
 }

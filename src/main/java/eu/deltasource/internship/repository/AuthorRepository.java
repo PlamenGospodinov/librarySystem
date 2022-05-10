@@ -2,18 +2,16 @@ package eu.deltasource.internship.repository;
 
 import eu.deltasource.internship.model.book.Author;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
- * A repository for the authors
+ * Stores the authors and allows different operations with them
  */
 public final class AuthorRepository {
 
-    private final List<Author> authorList = new ArrayList<>();
-
     private static final AuthorRepository INSTANCE = new AuthorRepository();
+
+    private final Set<Author> authorList = new HashSet<>();
 
     private AuthorRepository() {
     }
@@ -22,19 +20,19 @@ public final class AuthorRepository {
         return INSTANCE;
     }
 
-    public boolean addAuthor(Author author) {
-        if(!authorList.contains(author)) {
-            authorList.add(author);
-            return true;
-        }
-        return false;
+    public boolean add(Author author) {
+        return authorList.add(author);
     }
 
-    public void removeAuthor(Author author) {
-        authorList.remove(author);
+    public boolean remove(Author author) {
+        return authorList.remove(author);
     }
 
-    public List<Author> getAuthorList() {
-        return Collections.unmodifiableList(authorList);
+    public void clearRepository() {
+        authorList.clear();
+    }
+
+    public Set<Author> getList() {
+        return Collections.unmodifiableSet(authorList);
     }
 }
