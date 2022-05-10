@@ -5,43 +5,37 @@ import eu.deltasource.internship.model.shared.Name;
 import eu.deltasource.internship.repository.AuthorRepository;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class AuthorService {
 
-    private static final AuthorService INSTANCE = new AuthorService();
+    private static AuthorService INSTANCE;
 
-    AuthorRepository repository = AuthorRepository.getInstance();
+    private final AuthorRepository repository = AuthorRepository.getInstance();
 
     private AuthorService() {
     }
 
     public static AuthorService getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new AuthorService();
+        }
         return INSTANCE;
     }
 
-    public String create(String firstName, String secondName, String lastName, String country, LocalDate dateOfBirth, LocalDate dateOfDeath) {
-        if (null == firstName || firstName.isBlank()) {
-            return "Enter first name!";
-        }
-
-        if (null == secondName || secondName.isBlank()) {
-            return "Enter second name!";
-        }
-
-        if (null == lastName || lastName.isBlank()) {
-            return "Enter last name!";
-        }
-
-        if (null == country || country.isBlank()) {
-            return "Enter country!";
-        }
-
-        if(dateOfBirth == null || dateOfBirth.isAfter(dateOfDeath) ) {
-            return "Date of birth can't be after date of death or null!";
-        }
+    public Author create(String firstName, String secondName, String lastName, String country, LocalDate dateOfBirth, LocalDate dateOfDeath) {
         Name name = new Name(firstName, secondName, lastName);
         Author author = new Author(name, country, dateOfBirth, dateOfDeath);
-        repository.add(author);
-        return "Successfully added an author!";
+        return repository.add(author);
+    }
+
+    public boolean delete(String firstName, String secondName, String lastName, String country, LocalDate dateOfBirth, LocalDate dateOfDeath) {
+        Name name = new Name(firstName, secondName, lastName);
+        Author author = new Author(name, country, dateOfBirth, dateOfDeath);
+        return repository.remove(author);
+    }
+
+    public Set<Author> getList() {
+        return repository.getList();
     }
 }

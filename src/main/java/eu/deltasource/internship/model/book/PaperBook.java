@@ -6,8 +6,6 @@ import eu.deltasource.internship.model.enumeration.Tag;
 import java.util.List;
 import java.util.Objects;
 
-import static eu.deltasource.internship.model.shared.Validator.validator;
-
 /**
  * Extends the base Book class and has total copies in addition
  */
@@ -32,7 +30,11 @@ public class PaperBook extends Book {
     }
 
     private void setTotalCopies(int totalCopies) {
-        validator.validateAgeOrNumberOfTotalCopies(totalCopies, "total copies");
+        if (totalCopies > 100) {
+            throw new IllegalArgumentException("Enter valid " + totalCopies + " ! It can't be more than 100!");
+        } else if (totalCopies <= 0) {
+            throw new IllegalArgumentException("Enter valid " + totalCopies + " ! It should be at least 1!");
+        }
         this.totalCopies = totalCopies;
     }
 

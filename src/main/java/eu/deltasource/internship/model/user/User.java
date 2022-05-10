@@ -1,5 +1,6 @@
 package eu.deltasource.internship.model.user;
 
+import eu.deltasource.internship.exception.SetterValidationException;
 import eu.deltasource.internship.model.enumeration.Role;
 import eu.deltasource.internship.model.enumeration.Sex;
 import eu.deltasource.internship.model.shared.Name;
@@ -7,11 +8,6 @@ import eu.deltasource.internship.model.shared.Validator;
 
 import java.util.Objects;
 
-import static eu.deltasource.internship.model.shared.Validator.validator;
-
-/**
- * Stores the data for each of our users
- */
 public class User {
 
     private Name names;
@@ -36,11 +32,6 @@ public class User {
      * @param names - User's 3 names
      * @param credentials - username and password
      * @param address - country, city and street
-     * @param age
-     * @param sex
-     * @param role
-     * @param email
-     * @param eugdpr
      */
     public User(Name names, Credentials credentials, Address address, int age, Sex sex, Role role, String email, boolean eugdpr) {
         setNames(names);
@@ -53,38 +44,54 @@ public class User {
         setEugdpr(eugdpr);
     }
 
+    Validator validator = Validator.getInstance();
+
     private void setNames(Name names) {
-        validator.validateObjectIsNotNull(names,"names");
+        if(names == null) {
+            throw new SetterValidationException("names");
+        }
         this.names = names;
     }
 
     private void setCredentials(Credentials credentials) {
-        validator.validateObjectIsNotNull(credentials,"credentials");
+        if(credentials == null) {
+            throw new SetterValidationException("credentials");
+        }
         this.credentials = credentials;
     }
 
     private void setAddress(Address address) {
-        validator.validateObjectIsNotNull(address,"address");
+        if(address == null) {
+            throw new SetterValidationException("address");
+        }
         this.address = address;
     }
 
     private void setAge(int age) {
-        validator.validateAgeOrNumberOfTotalCopies(age, "age");
+        if (age > 130) {
+            throw new IllegalArgumentException("Enter valid " + age + " ! It can't be more than 130!");
+        } else if (age <= 7) {
+            throw new IllegalArgumentException("Enter valid " + age + " ! It should be at least 7!");
+        }
         this.age = age;
     }
 
     private void setSex(Sex sex) {
-        validator.validateObjectIsNotNull(sex,"sex");
+        if(sex == null) {
+            throw new SetterValidationException("sex");
+        }
         this.sex = sex;
     }
 
     private void setRole(Role role) {
-        validator.validateObjectIsNotNull(role,"role");
+        if(role == null) {
+            throw new SetterValidationException("role");
+        }
         this.role = role;
     }
 
     private void setEmail(String email) {
-        validator.validateStringIsNotEmptyOrNull(email, "email");
+        validator.validateNotBlank(email);
         this.email = email;
     }
 

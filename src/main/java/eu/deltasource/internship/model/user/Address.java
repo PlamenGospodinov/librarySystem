@@ -4,11 +4,6 @@ import eu.deltasource.internship.model.shared.Validator;
 
 import java.util.Objects;
 
-import static eu.deltasource.internship.model.shared.Validator.validator;
-
-/**
- * Holds all the information about one's address
- */
 public class Address {
 
     private String country;
@@ -19,10 +14,6 @@ public class Address {
 
     /**
      * Constructor for the Address class
-     *
-     * @param country
-     * @param city
-     * @param street
      */
     public Address(String country, String city, String street) {
         setCountry(country);
@@ -30,18 +21,20 @@ public class Address {
         setStreet(street);
     }
 
+    Validator validator = Validator.getInstance();
+
     private void setCountry(String country) {
-        validator.validateStringIsNotEmptyOrNull(country, "country");
+        validator.validateNotBlank(country);
         this.country = country;
     }
 
     private void setCity(String city) {
-        validator.validateStringIsNotEmptyOrNull(city, "city");
+        validator.validateNotBlank(city);
         this.city = city;
     }
 
     private void setStreet(String street) {
-        validator.validateStringIsNotEmptyOrNull(street, "street");
+        validator.validateNotBlank(street);
         this.street = street;
     }
 

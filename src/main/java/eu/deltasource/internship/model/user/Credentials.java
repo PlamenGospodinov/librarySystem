@@ -1,8 +1,8 @@
 package eu.deltasource.internship.model.user;
 
-import java.util.Objects;
+import eu.deltasource.internship.model.shared.Validator;
 
-import static eu.deltasource.internship.model.shared.Validator.validator;
+import java.util.Objects;
 
 /**
  * Stores the username and password of the user
@@ -18,13 +18,15 @@ public class Credentials {
         setPassword(password);
     }
 
+    Validator validator = Validator.getInstance();
+
     private void setUsername(String username) {
-        validator.validateStringIsNotEmptyOrNull(username, "username");
+        validator.validateNotBlank(username);
         this.username = username;
     }
 
     private void setPassword(String password) {
-        validator.validateStringIsNotEmptyOrNull(password, "password");
+        validator.validateNotBlank(password);
         this.password = password;
     }
 

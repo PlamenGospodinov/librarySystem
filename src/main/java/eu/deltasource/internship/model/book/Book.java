@@ -1,5 +1,6 @@
 package eu.deltasource.internship.model.book;
 
+import eu.deltasource.internship.exception.SetterValidationException;
 import eu.deltasource.internship.model.enumeration.Genre;
 import eu.deltasource.internship.model.enumeration.Tag;
 import eu.deltasource.internship.model.shared.Validator;
@@ -7,11 +8,6 @@ import eu.deltasource.internship.model.shared.Validator;
 import java.util.List;
 import java.util.Objects;
 
-import static eu.deltasource.internship.model.shared.Validator.validator;
-
-/**
- * Used for the creation of paper books and e-books
- */
 public abstract class Book {
 
     protected String title;
@@ -45,33 +41,41 @@ public abstract class Book {
         setTags(tags);
     }
 
+    Validator validator = Validator.getInstance();
+
     private void setTitle(String title) {
-        validator.validateStringIsNotEmptyOrNull(title, "title");
+        validator.validateNotBlank(title);
         this.title = title;
     }
 
     private void setAuthors(List<Author> authors) {
-        validator.validateListIsNotNull(authors, "author");
+        if(authors == null) {
+            throw new SetterValidationException("authors list!");
+        }
         this.authors = authors;
     }
 
     private void setGenres(List<Genre> genres) {
-        validator.validateListIsNotNull(genres, "genres");
+        if(genres == null) {
+            throw new SetterValidationException("genres list!");
+        }
         this.genres = genres;
     }
 
     private void setSummary(String summary) {
-        validator.validateStringIsNotEmptyOrNull(summary, "summary");
+        validator.validateNotBlank(summary);
         this.summary = summary;
     }
 
     private void setIsbn(String isbn) {
-        validator.validateStringIsNotEmptyOrNull(isbn, "ISBN");
+        validator.validateNotBlank(isbn);
         this.isbn = isbn;
     }
 
     private void setTags(List<Tag> tags) {
-        validator.validateListIsNotNull(tags, "tags");
+        if(tags == null) {
+            throw new SetterValidationException("tags list!");
+        }
         this.tags = tags;
     }
 

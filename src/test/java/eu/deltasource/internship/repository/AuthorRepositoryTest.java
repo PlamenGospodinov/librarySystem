@@ -6,10 +6,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AuthorRepositoryTest {
 
@@ -27,11 +27,11 @@ class AuthorRepositoryTest {
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
 
         // When
-        boolean successfulAdd = authorRepoInstance.add(IvanVazov);
+        Author successfulAdd = authorRepoInstance.add(IvanVazov);
 
         // Then
         assertEquals(1, authorRepoInstance.getList().size());
-        assertTrue(successfulAdd);
+        assertTrue(authorRepoInstance.getList().contains(successfulAdd));
     }
 
     @Test
@@ -39,15 +39,14 @@ class AuthorRepositoryTest {
         // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850,7,9), LocalDate.of(1921,9,22));
-        boolean successfulAdd = authorRepoInstance.add(IvanVazov);
+        Author successfulAdd = authorRepoInstance.add(IvanVazov);
 
         // When
-        boolean failedAdd = authorRepoInstance.add(IvanVazov);
+        authorRepoInstance.add(IvanVazov);
 
         // Then
         assertEquals(1, authorRepoInstance.getList().size());
-        assertTrue(successfulAdd);
-        assertFalse(failedAdd);
+        assertTrue(authorRepoInstance.getList().contains(successfulAdd));
     }
 
     @Test

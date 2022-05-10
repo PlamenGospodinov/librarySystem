@@ -24,16 +24,15 @@ public class EBookRepository implements SearchBook {
         return INSTANCE;
     }
 
-    public boolean add(EBook book) {
-        if (!eBookList.contains(book)) {
-            eBookList.add(book);
-            return true;
+    public EBook add(EBook book) {
+        if(eBookList.add(book)) {
+            return book;
         }
-        return false;
+        return null;
     }
 
-    public void remove(EBook book) {
-        eBookList.remove(book);
+    public boolean remove(EBook book) {
+        return eBookList.remove(book);
     }
 
     public void clearRepository() {

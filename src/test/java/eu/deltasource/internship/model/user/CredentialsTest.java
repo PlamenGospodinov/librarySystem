@@ -10,10 +10,10 @@ class CredentialsTest {
     @Test
     void testShouldCreateUsernameSuccessfully() {
         // Given
-        Credentials credentials0 = new Credentials(null, "wjdiawd454wfafa");
+        Credentials credentials0 = new Credentials("Misho", "wjdiawd454wfafa");
 
         // When
-        Credentials credentials1 = new Credentials(null, "wjdiawd454wfafa");
+        Credentials credentials1 = new Credentials("Misho", "wjdiawd454wfafa");
 
         // Then
         assertEquals(credentials0, credentials1);

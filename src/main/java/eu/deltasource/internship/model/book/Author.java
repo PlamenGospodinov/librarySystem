@@ -1,15 +1,12 @@
 package eu.deltasource.internship.model.book;
 
+import eu.deltasource.internship.exception.SetterValidationException;
 import eu.deltasource.internship.model.shared.Name;
+import eu.deltasource.internship.model.shared.Validator;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-import static eu.deltasource.internship.model.shared.Validator.validator;
-
-/**
- * Holds all the needed information about a given author
- */
 public class Author {
 
     private Name name;
@@ -27,13 +24,17 @@ public class Author {
         setDateOfDeath(dateOfDeath);
     }
 
+    Validator validator = Validator.getInstance();
+
     private void setName(Name name) {
-        validator.validateObjectIsNotNull(name, "name");
+        if(name == null) {
+            throw new SetterValidationException("name");
+        }
         this.name = name;
     }
 
     private void setCountry(String country) {
-        validator.validateStringIsNotEmptyOrNull(country, "country");
+        validator.validateNotBlank(country);
         this.country = country;
     }
 

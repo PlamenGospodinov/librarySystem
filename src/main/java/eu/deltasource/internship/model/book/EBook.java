@@ -7,8 +7,6 @@ import eu.deltasource.internship.model.shared.Validator;
 import java.util.List;
 import java.util.Objects;
 
-import static eu.deltasource.internship.model.shared.Validator.validator;
-
 /**
  * Extends the base Book class and has link for reading and downloading in addition
  */
@@ -36,8 +34,10 @@ public class EBook extends Book{
         setLinkForDownloading(linkForDownloading);
     }
 
+    Validator validator = Validator.getInstance();
+
     private void setLinkForReading(String linkForReading) {
-        validator.validateStringIsNotEmptyOrNull(linkForReading, "link for reading");
+        validator.validateNotBlank(linkForReading);
         this.linkForReading = linkForReading;
     }
 

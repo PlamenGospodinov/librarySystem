@@ -143,7 +143,7 @@ class UserTest {
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
         // When
-        Executable emailSetterException = () -> new User(name, credentials, address,11, Sex.MALE, Role.REGULAR,"null",false);
+        Executable emailSetterException = () -> new User(name, credentials, address,11, Sex.MALE, Role.REGULAR,"",false);
 
         // Then
         assertThrows(IllegalArgumentException.class, emailSetterException);
