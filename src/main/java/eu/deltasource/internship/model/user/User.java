@@ -46,6 +46,10 @@ public class User {
 
     Validator validator = Validator.getInstance();
 
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
     private void setNames(Name names) {
         if(names == null) {
             throw new SetterValidationException("names");

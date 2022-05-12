@@ -21,6 +21,10 @@ public class EBookController {
         return service.delete(title, authors, genres, summary, isbn, tags, linkForReading, linkForDownloading);
     }
 
+    public boolean deleteByIsbn(String isbn) {
+        return service.deleteByIsbn(isbn);
+    }
+
     public Set<EBook> getList() {
         return service.getList();
     }

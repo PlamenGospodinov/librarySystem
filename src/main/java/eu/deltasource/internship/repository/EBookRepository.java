@@ -1,17 +1,20 @@
 package eu.deltasource.internship.repository;
 
-import eu.deltasource.internship.model.book.Book;
+import eu.deltasource.internship.model.book.Author;
 import eu.deltasource.internship.model.book.EBook;
 import eu.deltasource.internship.model.enumeration.Genre;
 import eu.deltasource.internship.model.enumeration.Tag;
-import eu.deltasource.internship.model.shared.SearchBook;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Stores the ebooks and allows different operations with them
  */
-public class EBookRepository implements SearchBook {
+public class EBookRepository {
 
     private static final EBookRepository INSTANCE = new EBookRepository();
 
@@ -35,6 +38,10 @@ public class EBookRepository implements SearchBook {
         return eBookList.remove(book);
     }
 
+    public boolean removeByIsbn(String isbn) {
+        return eBookList.removeIf(b -> b.getIsbn().equals(isbn));
+    }
+
     public void clearRepository() {
         eBookList.clear();
     }
@@ -43,33 +50,80 @@ public class EBookRepository implements SearchBook {
         return Collections.unmodifiableSet(eBookList);
     }
 
-    @Override
-    public List<Book> searchByAuthorFirstName(String firstName) {
+    public Set<EBook> searchByAuthorsName(String name) {
+        if(name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Inappropriate title! Can't be null or blank!");
+        }
+        Set<EBook> searchResult = new HashSet<>();
+        Pattern pattern = Pattern.compile(name, Pattern.CASE_INSENSITIVE);
+        for (EBook book :eBookList) {
+            for (Author author : book.getAuthors()) {
+                String fullName = author.getName().getFirstName() +
+                        author.getName().getSecondName() +
+                        author.getName().getLastName();
+                Matcher matcher = pattern.matcher(fullName);
+                if(matcher.find()) {
+                    searchResult.add(book);
+                }
+            }
+        }
+        return searchResult;
+    }
+
+    public Set<EBook> searchByTitle(String title) {
+        if(title == null || title.isBlank()) {
+            throw new IllegalArgumentException("Inappropriate title! Can't be null or blank!");
+        }
+        Set<EBook> searchResult = new HashSet<>();
+        Pattern pattern = Pattern.compile(title, Pattern.CASE_INSENSITIVE);
+        for (EBook book :eBookList) {
+            Matcher matcher = pattern.matcher(book.getTitle());
+            if(matcher.find()) {
+                searchResult.add(book);
+            }
+        }
+        return searchResult;
+    }
+
+    public EBook searchByIsbn(String isbn) {
+        if(isbn == null || isbn.isBlank()) {
+            throw new IllegalArgumentException("Inappropriate isbn! Can't be null or blank!");
+        }
+        for (EBook book :eBookList) {
+            if(book.getIsbn().equals(isbn)) {
+                return book;
+            }
+        }
         return null;
     }
 
-    @Override
-    public List<Book> searchByAuthorLastName(String lastName) {
-        return null;
+    public Set<EBook> searchByGenre(String genre) {
+        if (genre == null || genre.isBlank()) {
+            throw new IllegalArgumentException("Inappropriate genre! Can't be null or blank!");
+        }
+        Set<EBook> searchResult = new HashSet<>();
+        for (EBook book : eBookList) {
+            for (Genre genreSignature : book.getGenres()) {
+                if(genreSignature.toString().toLowerCase().equals(genre)) {
+                    searchResult.add(book);
+                }
+            }
+        }
+        return searchResult;
     }
 
-    @Override
-    public List<Book> searchByTitle(String title) {
-        return null;
-    }
-
-    @Override
-    public Book searchByISBN(String isbn) {
-        return null;
-    }
-
-    @Override
-    public List<Book> searchByGenre(Genre genre) {
-        return null;
-    }
-
-    @Override
-    public List<Book> searchByTag(Tag tag) {
-        return null;
+    public Set<EBook> searchByTag(String tag) {
+        if(tag == null || tag.isBlank()) {
+            throw new IllegalArgumentException("Inappropriate tag! Can't be null or blank!");
+        }
+        Set<EBook> searchResult = new HashSet<>();
+        for (EBook book : eBookList) {
+            for (Tag tagSignature : book.getTags()) {
+                if(tagSignature.toString().toLowerCase().equals(tag)) {
+                    searchResult.add(book);
+                }
+            }
+        }
+        return searchResult;
     }
 }

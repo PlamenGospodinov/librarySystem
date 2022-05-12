@@ -15,10 +15,6 @@ public class Name {
 
     /**
      * Constructor for the Name class
-     *
-     * @param firstName
-     * @param secondName
-     * @param lastName
      */
     public Name(String firstName, String secondName, String lastName) {
         setFirstName(firstName);
@@ -27,6 +23,18 @@ public class Name {
     }
 
     Validator validator = Validator.getInstance();
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 
     private void setFirstName(String firstName) {
         validator.validateNotBlank(firstName);

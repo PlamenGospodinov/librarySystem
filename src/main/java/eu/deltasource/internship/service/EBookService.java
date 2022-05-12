@@ -4,11 +4,8 @@ import eu.deltasource.internship.model.book.Author;
 import eu.deltasource.internship.model.book.EBook;
 import eu.deltasource.internship.model.enumeration.Genre;
 import eu.deltasource.internship.model.enumeration.Tag;
-import eu.deltasource.internship.model.shared.Name;
-import eu.deltasource.internship.repository.AuthorRepository;
 import eu.deltasource.internship.repository.EBookRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -35,6 +32,10 @@ public class EBookService {
     public boolean delete(String title, List<Author> authors, List<Genre> genres, String summary, String isbn, List<Tag> tags, String linkForReading, String linkForDownloading) {
         EBook ebook = new EBook(title, authors, genres, summary, isbn, tags, linkForReading, linkForDownloading);
         return repository.remove(ebook);
+    }
+
+    public boolean deleteByIsbn(String isbn) {
+        return repository.removeByIsbn(isbn);
     }
 
     public Set<EBook> getList() {

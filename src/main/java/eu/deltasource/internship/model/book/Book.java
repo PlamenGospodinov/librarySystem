@@ -43,6 +43,26 @@ public abstract class Book {
 
     Validator validator = Validator.getInstance();
 
+    public String getTitle() {
+        return title;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
     private void setTitle(String title) {
         validator.validateNotBlank(title);
         this.title = title;

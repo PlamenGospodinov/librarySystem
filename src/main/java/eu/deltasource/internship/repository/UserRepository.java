@@ -1,5 +1,7 @@
 package eu.deltasource.internship.repository;
 
+import eu.deltasource.internship.model.user.ActiveUser;
+import eu.deltasource.internship.model.user.Credentials;
 import eu.deltasource.internship.model.user.User;
 
 import java.util.*;
@@ -19,16 +21,41 @@ public final class UserRepository {
         return INSTANCE;
     }
 
-    public boolean add(User user) {
+    public User add(User user) {
+        for(User userInList : userList) {
+            if(userInList.getCredentials().getUsername().equals(user.getCredentials().getUsername())) {
+                return null;
+            }
+        }
+
         if (!userList.contains(user)) {
             userList.add(user);
-            return true;
+            return user;
         }
-        return false;
+        return null;
     }
 
-    public void remove(User user) {
-        userList.remove(user);
+    public User get(Credentials credentials) {
+        for(User user : userList) {
+            if(user.getCredentials().equals(credentials)) {
+                ActiveUser.getInstance().setActiveUser(user);
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public boolean remove(User user) {
+        return userList.remove(user);
+    }
+
+    public boolean removeByUsername(String username) {
+        for(User user : userList) {
+            if(user.getCredentials().getUsername().equals(username)) {
+                return userList.remove(user);
+            }
+        }
+        return false;
     }
 
     public void clearRepository() {

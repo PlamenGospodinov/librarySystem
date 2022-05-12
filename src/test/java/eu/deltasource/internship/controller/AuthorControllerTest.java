@@ -85,7 +85,7 @@ class AuthorControllerTest {
         authorRepoInstance.add(IvanVazov2);
 
         // When
-        Set<Author> authors = authorRepoInstance.getList();
+        Set<Author> authors = controller.getList();
 
         //Then
         assertEquals(2, authorRepoInstance.getList().size());

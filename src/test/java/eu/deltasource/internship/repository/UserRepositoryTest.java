@@ -31,29 +31,45 @@ class UserRepositoryTest {
         User Peshkata = new User(name, credentials, address, 19, Sex.MALE, Role.REGULAR, "peshooo@abv.bg", true);
 
         // When
-        boolean successfulAdd = userRepoInstance.add(Peshkata);
+        userRepoInstance.add(Peshkata);
 
         // Then
         assertEquals(1, userRepoInstance.getList().size());
-        assertTrue(successfulAdd);
     }
 
     @Test
-    void testAddDuplicateUserReturnsFalse() {
+    void testAddUserWithSameUsernameAsSomeoneElseReturnsNull() {
         // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Credentials credentials = new Credentials("pesho123", "efs8efs494");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
         User Peshkata = new User(name, credentials, address, 19, Sex.MALE, Role.REGULAR, "peshooo@abv.bg", true);
-        boolean successfulAdd = userRepoInstance.add(Peshkata);
+        userRepoInstance.add(Peshkata);
+        User Peshkata2 = new User(name, credentials, address, 25, Sex.MALE, Role.REGULAR, "peshooo@abv.bg", true);
 
         // When
-        boolean failedAdd = userRepoInstance.add(Peshkata);
+        User failedAdd = userRepoInstance.add(Peshkata2);
 
         // Then
         assertEquals(1, userRepoInstance.getList().size());
-        assertTrue(successfulAdd);
-        assertFalse(failedAdd);
+        assertNull(failedAdd);
+    }
+
+    @Test
+    void testAddDuplicateUserReturnsNull() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Credentials credentials = new Credentials("pesho123", "efs8efs494");
+        Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
+        User Peshkata = new User(name, credentials, address, 19, Sex.MALE, Role.REGULAR, "peshooo@abv.bg", true);
+        userRepoInstance.add(Peshkata);
+
+        // When
+        User failedAdd = userRepoInstance.add(Peshkata);
+
+        // Then
+        assertEquals(1, userRepoInstance.getList().size());
+        assertNull(failedAdd);
     }
 
     @Test
@@ -70,6 +86,85 @@ class UserRepositoryTest {
 
         // Then
         assertEquals(0, userRepoInstance.getList().size());
+    }
+
+    @Test
+    void testRemoveUserThatDoesntExistReturnsFalse() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Credentials credentials = new Credentials("pesho123", "efs8efs494");
+        Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
+        User Peshkata = new User(name, credentials, address, 19, Sex.MALE, Role.REGULAR, "peshooo@abv.bg", true);
+
+        // When
+        boolean successfulRemove = userRepoInstance.remove(Peshkata);
+
+        // Then
+        assertFalse(successfulRemove);
+    }
+
+    @Test
+    void testRemoveUserByUsernameSuccessfully() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Credentials credentials = new Credentials("pesho123", "efs8efs494");
+        Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
+        User Peshkata = new User(name, credentials, address, 19, Sex.MALE, Role.REGULAR, "peshooo@abv.bg", true);
+        userRepoInstance.add(Peshkata);
+
+        // When
+        userRepoInstance.removeByUsername("pesho123");
+
+        // Then
+        assertEquals(0, userRepoInstance.getList().size());
+    }
+
+    @Test
+    void testRemoveUserThatDoesntExistByUsernameReturnsFalse() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Credentials credentials = new Credentials("pesho123", "efs8efs494");
+        Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
+
+        // When
+        boolean successfulRemove = userRepoInstance.removeByUsername("pesho123");
+
+        // Then
+        assertFalse(successfulRemove);
+    }
+
+    @Test
+    void testGetUsernameByCredentialsSuccessfully() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Credentials credentials = new Credentials("pesho123", "efs8efs494");
+        Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
+        User Peshkata = new User(name, credentials, address, 19, Sex.MALE, Role.REGULAR, "peshooo@abv.bg", true);
+        userRepoInstance.add(Peshkata);
+        Credentials creds = new Credentials("pesho123", "efs8efs494");
+
+        // When
+        User returnedUser = userRepoInstance.get(creds);
+
+        // Then
+        assertEquals(Peshkata, returnedUser);
+    }
+
+    @Test
+    void testGetUsernameByIncorrectCredentialsReturnsFalse() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Credentials credentials = new Credentials("pesho123", "efs8efs494");
+        Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
+        User Peshkata = new User(name, credentials, address, 19, Sex.MALE, Role.REGULAR, "peshooo@abv.bg", true);
+        userRepoInstance.add(Peshkata);
+        Credentials creds = new Credentials("pesho23", "efs8efs494");
+
+        // When
+        User returnedUser = userRepoInstance.get(creds);
+
+        // Then
+        assertNull(returnedUser);
     }
 
     @Test

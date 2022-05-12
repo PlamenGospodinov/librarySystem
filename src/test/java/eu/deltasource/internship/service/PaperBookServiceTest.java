@@ -1,12 +1,11 @@
-package eu.deltasource.internship.controller;
+package eu.deltasource.internship.service;
 
 import eu.deltasource.internship.model.book.Author;
-import eu.deltasource.internship.model.book.EBook;
+import eu.deltasource.internship.model.book.PaperBook;
 import eu.deltasource.internship.model.enumeration.Genre;
 import eu.deltasource.internship.model.enumeration.Tag;
 import eu.deltasource.internship.model.shared.Name;
-import eu.deltasource.internship.repository.EBookRepository;
-import eu.deltasource.internship.service.EBookService;
+import eu.deltasource.internship.repository.PaperBookRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,18 +16,17 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EBookControllerTest {
-    EBookService service = EBookService.getInstance();
-    EBookController controller = new EBookController();
-    EBookRepository eBookRepoInstance = EBookRepository.getInstance();
+class PaperBookServiceTest {
+    PaperBookService service = PaperBookService.getInstance();
+    PaperBookRepository paperBookRepoInstance = PaperBookRepository.getInstance();
 
     @AfterEach
     void clear() {
-        eBookRepoInstance.clearRepository();
+        paperBookRepoInstance.clearRepository();
     }
 
     @Test
-    void testCreateAnEBookSuccessfully() {
+    void testCreateAPaperBookSuccessfully() {
         // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
@@ -39,19 +37,19 @@ class EBookControllerTest {
         genres.add(Genre.DETECTIVE);
         authors.add(IvanVazov);
         tags.add(Tag.BOOK);
-        EBook ironHeart = new EBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
+        PaperBook harryPotter0 = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 15);
 
         // When
-        EBook eBook = controller.create("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
+        PaperBook harryPotter = service.create("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 15);
 
         // Then
-        assertEquals(ironHeart, eBook);
-        assertEquals(1, eBookRepoInstance.getList().size());
+        assertEquals(harryPotter0, harryPotter);
+        assertEquals(1, paperBookRepoInstance.getList().size());
 
     }
 
     @Test
-    void testAddADuplicateEBookReturnsNull() {
+    void testAddADuplicatePaperBookReturnsNull() {
         // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
@@ -62,14 +60,14 @@ class EBookControllerTest {
         genres.add(Genre.DETECTIVE);
         authors.add(IvanVazov);
         tags.add(Tag.BOOK);
-        controller.create("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
+        service.create("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 15);
 
         // When
-        EBook eBook = controller.create("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
+        PaperBook harryPotter = service.create("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 15);
 
         // Then
-        assertNull(eBook);
-        assertEquals(1, eBookRepoInstance.getList().size());
+        assertNull(harryPotter);
+        assertEquals(1, paperBookRepoInstance.getList().size());
     }
 
     @Test
@@ -84,37 +82,18 @@ class EBookControllerTest {
         genres.add(Genre.DETECTIVE);
         authors.add(IvanVazov);
         tags.add(Tag.BOOK);
-        controller.create("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
+        service.create("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 15);
 
         // When
-        boolean successfulDelete = controller.delete("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
+        boolean successfulDelete = service.delete("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 15);
 
         // Then
         assertTrue(successfulDelete);
-        assertEquals(0, eBookRepoInstance.getList().size());
+        assertEquals(0, paperBookRepoInstance.getList().size());
     }
 
     @Test
-    void testDeleteAnEBookThatDoesntExistReturnsFalse() {
-        // Given
-        Name name = new Name("Ivan", "Minchov", "Vazov");
-        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
-        List<Author> authors = new ArrayList<>();
-        List<Genre> genres = new ArrayList<>();
-        List<Tag> tags = new ArrayList<>();
-        genres.add(Genre.SUSPENSE);
-        genres.add(Genre.DETECTIVE);
-        authors.add(IvanVazov);
-
-        // When
-        boolean successfulDelete = controller.delete("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
-
-        // Then
-        assertFalse(successfulDelete);
-    }
-
-    @Test
-    void testDeleteAnEBookByIsbnSuccessfully() {
+    void testDeleteAPaperBookThatDoesntExistReturnsFalse() {
         // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
@@ -125,18 +104,16 @@ class EBookControllerTest {
         genres.add(Genre.DETECTIVE);
         authors.add(IvanVazov);
         tags.add(Tag.BOOK);
-        controller.create("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
 
         // When
-        boolean successfulDelete = controller.deleteByIsbn("98-54-895-98");
+        boolean successfulRemove = service.delete("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 15);
 
         // Then
-        assertTrue(successfulDelete);
-        assertEquals(0, eBookRepoInstance.getList().size());
+        assertFalse(successfulRemove);
     }
 
     @Test
-    void testDeleteAnEBookByInvalidIsbnReturnsFalse() {
+    void testReturnAPaperBookSetSuccessfully() {
         // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
@@ -147,18 +124,22 @@ class EBookControllerTest {
         genres.add(Genre.DETECTIVE);
         authors.add(IvanVazov);
         tags.add(Tag.BOOK);
-        controller.create("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
+        PaperBook harryPotter0 = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 15);
+        PaperBook harryPotter1 = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-97", tags, 15);
+        paperBookRepoInstance.add(harryPotter0);
+        paperBookRepoInstance.add(harryPotter1);
 
         // When
-        boolean successfulDelete = controller.deleteByIsbn("98-74-895-98");
+        Set<PaperBook> paperBooks = service.getList();
 
-        // Then
-        assertFalse(successfulDelete);
-        assertEquals(1, eBookRepoInstance.getList().size());
+        //Then
+        assertEquals(2, paperBooks.size());
+        assertTrue(paperBooks.contains(harryPotter0));
+        assertTrue(paperBooks.contains(harryPotter1));
     }
 
     @Test
-    void testReturnAnEBooksSetSuccessfully() {
+    void testDeleteByIsbnIsSuccessful() {
         // Given
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
@@ -169,17 +150,37 @@ class EBookControllerTest {
         genres.add(Genre.DETECTIVE);
         authors.add(IvanVazov);
         tags.add(Tag.BOOK);
-        EBook ironHeart = new EBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
-        EBook ironHeart2 = new EBook("RandomName2", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
-        eBookRepoInstance.add(ironHeart);
-        eBookRepoInstance.add(ironHeart2);
+        PaperBook harryPotter0 = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 15);
+        paperBookRepoInstance.add(harryPotter0);
 
         // When
-        Set<EBook> eBooksSet = controller.getList();
+        boolean deleteIsSuccessful = service.deleteByIsbn("98-54-895-98");
 
-        // Then
-        assertEquals(2, eBooksSet.size());
-        assertTrue(eBookRepoInstance.getList().contains(ironHeart));
-        assertTrue(eBookRepoInstance.getList().contains(ironHeart2));
+        //Then
+        assertEquals(0, paperBookRepoInstance.getList().size());
+        assertTrue(deleteIsSuccessful);
+    }
+
+    @Test
+    void testDeleteByIsbnReturnsFalseIfIsbnIsNotCorrect() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        genres.add(Genre.SUSPENSE);
+        genres.add(Genre.DETECTIVE);
+        authors.add(IvanVazov);
+        tags.add(Tag.BOOK);
+        PaperBook harryPotter0 = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags,15);
+        paperBookRepoInstance.add(harryPotter0);
+
+        // When
+        boolean deleteIsSuccessful = service.deleteByIsbn("98-55-895-98");
+
+        //Then
+        assertEquals(1, paperBookRepoInstance.getList().size());
+        assertFalse(deleteIsSuccessful);
     }
 }

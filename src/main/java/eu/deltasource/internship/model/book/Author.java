@@ -26,6 +26,10 @@ public class Author {
 
     Validator validator = Validator.getInstance();
 
+    public Name getName() {
+        return name;
+    }
+
     private void setName(Name name) {
         if(name == null) {
             throw new SetterValidationException("name");

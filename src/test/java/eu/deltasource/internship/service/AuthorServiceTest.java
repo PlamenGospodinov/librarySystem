@@ -83,11 +83,11 @@ class AuthorServiceTest {
         authorRepoInstance.add(IvanVazov2);
 
         // When
-        Set<Author> authors = authorRepoInstance.getList();
+        Set<Author> authors = service.getList();
 
         //Then
-        assertEquals(2, authorRepoInstance.getList().size());
-        assertTrue(authorRepoInstance.getList().contains(IvanVazov));
-        assertTrue(authorRepoInstance.getList().contains(IvanVazov2));
+        assertEquals(2, authors.size());
+        assertTrue(authors.contains(IvanVazov));
+        assertTrue(authors.contains(IvanVazov2));
     }
 }

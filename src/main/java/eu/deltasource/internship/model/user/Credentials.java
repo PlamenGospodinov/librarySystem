@@ -20,6 +20,10 @@ public class Credentials {
 
     Validator validator = Validator.getInstance();
 
+    public String getUsername() {
+        return username;
+    }
+
     private void setUsername(String username) {
         validator.validateNotBlank(username);
         this.username = username;
