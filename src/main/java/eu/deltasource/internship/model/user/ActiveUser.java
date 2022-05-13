@@ -23,9 +23,6 @@ public class ActiveUser {
     }
 
     public void setActiveUser(User user) {
-        if(user == null) {
-            throw new SetterValidationException("user");
-        }
         activeUser = user;
     }
 }

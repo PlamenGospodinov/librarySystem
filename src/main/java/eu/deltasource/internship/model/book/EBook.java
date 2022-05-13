@@ -45,6 +45,14 @@ public class EBook extends Book{
         this.linkForDownloading = linkForDownloading;
     }
 
+    public String getLinkForReading() {
+        return linkForReading;
+    }
+
+    public String getLinkForDownloading() {
+        return linkForDownloading;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -29,6 +29,10 @@ public class PaperBook extends Book {
         setTotalCopies(totalCopies);
     }
 
+    public int getTotalCopies() {
+        return totalCopies;
+    }
+
     private void setTotalCopies(int totalCopies) {
         if (totalCopies > 100) {
             throw new IllegalArgumentException("Enter valid " + totalCopies + " ! It can't be more than 100!");

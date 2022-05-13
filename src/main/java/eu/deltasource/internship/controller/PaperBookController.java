@@ -25,6 +25,26 @@ public class PaperBookController {
         return service.deleteByIsbn(isbn);
     }
 
+    public Set<PaperBook> searchByAuthorNames(String name) {
+        return service.searchByAuthorNames(name);
+    }
+
+    public Set<PaperBook> searchByTitle(String title) {
+        return service.searchByTitle(title);
+    }
+
+    public PaperBook searchByIsbn(String isbn) {
+        return service.searchByIsbn(isbn);
+    }
+
+    public Set<PaperBook> searchByTag(String tag) {
+        return service.searchByTag(tag);
+    }
+
+    public Set<PaperBook> searchByGenre(String genre) {
+        return service.searchByGenre(genre);
+    }
+
     public Set<PaperBook> getList() {
         return service.getList();
     }

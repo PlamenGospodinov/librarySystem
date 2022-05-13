@@ -38,6 +38,26 @@ public class PaperBookService {
         return repository.removeByIsbn(isbn);
     }
 
+    public Set<PaperBook> searchByAuthorNames(String name) {
+        return repository.searchByAuthorsName(name);
+    }
+
+    public Set<PaperBook> searchByTitle(String title) {
+        return repository.searchByTitle(title);
+    }
+
+    public PaperBook searchByIsbn(String isbn) {
+        return repository.searchByIsbn(isbn);
+    }
+
+    public Set<PaperBook> searchByTag(String tag) {
+        return repository.searchByTag(tag);
+    }
+
+    public Set<PaperBook> searchByGenre(String genre) {
+        return repository.searchByGenre(genre);
+    }
+
     public Set<PaperBook> getList() {
         return repository.getList();
     }

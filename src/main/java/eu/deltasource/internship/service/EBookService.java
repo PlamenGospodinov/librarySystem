@@ -34,8 +34,36 @@ public class EBookService {
         return repository.remove(ebook);
     }
 
+    public String read(EBook eBook) {
+        return repository.read(eBook);
+    }
+
+    public String download(EBook eBook) {
+        return repository.download(eBook);
+    }
+
     public boolean deleteByIsbn(String isbn) {
         return repository.removeByIsbn(isbn);
+    }
+
+    public Set<EBook> searchByAuthorNames(String name) {
+        return repository.searchByAuthorsName(name);
+    }
+
+    public Set<EBook> searchByTitle(String title) {
+        return repository.searchByTitle(title);
+    }
+
+    public EBook searchByIsbn(String isbn) {
+        return repository.searchByIsbn(isbn);
+    }
+
+    public Set<EBook> searchByTag(String tag) {
+        return repository.searchByTag(tag);
+    }
+
+    public Set<EBook> searchByGenre(String genre) {
+        return repository.searchByGenre(genre);
     }
 
     public Set<EBook> getList() {

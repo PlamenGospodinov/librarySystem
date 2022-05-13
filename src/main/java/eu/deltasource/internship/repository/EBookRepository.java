@@ -42,6 +42,20 @@ public class EBookRepository {
         return eBookList.removeIf(b -> b.getIsbn().equals(isbn));
     }
 
+    public String read(EBook book) {
+        if(eBookList.contains(book)) {
+            return book.getLinkForReading();
+        }
+        return null;
+    }
+
+    public String download(EBook book) {
+        if(eBookList.contains(book)) {
+            return book.getLinkForDownloading();
+        }
+        return null;
+    }
+
     public void clearRepository() {
         eBookList.clear();
     }

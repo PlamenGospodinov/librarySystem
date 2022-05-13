@@ -21,8 +21,36 @@ public class EBookController {
         return service.delete(title, authors, genres, summary, isbn, tags, linkForReading, linkForDownloading);
     }
 
+    public String read(EBook book) {
+        return service.read(book);
+    }
+
+    public String download(EBook book) {
+        return service.read(book);
+    }
+
     public boolean deleteByIsbn(String isbn) {
         return service.deleteByIsbn(isbn);
+    }
+
+    public Set<EBook> searchByAuthorNames(String name) {
+        return service.searchByAuthorNames(name);
+    }
+
+    public Set<EBook> searchByTitle(String title) {
+        return service.searchByTitle(title);
+    }
+
+    public EBook searchByIsbn(String isbn) {
+        return service.searchByIsbn(isbn);
+    }
+
+    public Set<EBook> searchByTag(String tag) {
+        return service.searchByTag(tag);
+    }
+
+    public Set<EBook> searchByGenre(String genre) {
+        return service.searchByGenre(genre);
     }
 
     public Set<EBook> getList() {

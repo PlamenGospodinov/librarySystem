@@ -19,6 +19,10 @@ public class UserController {
         return service.login(username, password);
     }
 
+    public void logout() {
+        service.logout();
+    }
+
     public boolean remove(String firstName, String secondName, String lastName, String username, String password, String country, String city, String street, int age, Sex sex, Role role, String email, boolean eugdpr) {
         return service.delete(firstName, secondName, lastName, username, password, country, city, street, age, sex, role, email, eugdpr);
     }

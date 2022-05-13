@@ -122,9 +122,6 @@ class UserRepositoryTest {
     @Test
     void testRemoveUserThatDoesntExistByUsernameReturnsFalse() {
         // Given
-        Name name = new Name("Ivan", "Minchov", "Vazov");
-        Credentials credentials = new Credentials("pesho123", "efs8efs494");
-        Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
 
         // When
         boolean successfulRemove = userRepoInstance.removeByUsername("pesho123");

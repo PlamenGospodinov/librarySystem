@@ -39,6 +39,10 @@ public class UserService {
         return repository.get(credentials);
     }
 
+    public void logout() {
+        repository.logout();
+    }
+
     public boolean delete(String firstName, String secondName, String lastName, String username, String password, String country, String city, String street, int age, Sex sex, Role role, String email, boolean eugdpr) {
         Name name = new Name(firstName, secondName, lastName);
         Credentials credentials = new Credentials(username, password);

@@ -45,6 +45,10 @@ public final class UserRepository {
         return null;
     }
 
+    public void logout() {
+        ActiveUser.getInstance().setActiveUser(null);
+    }
+
     public boolean remove(User user) {
         return userList.remove(user);
     }
