@@ -13,6 +13,8 @@ public class PaperBook extends Book {
 
     private int totalCopies;
 
+    private int availableCopies;
+
     /**
      * Constructor for the PaperBook class
      *
@@ -27,10 +29,19 @@ public class PaperBook extends Book {
     public PaperBook(String title, List<Author> authors, List<Genre> genres, String summary, String isbn, List<Tag> tags, int totalCopies) {
         super(title, authors, genres, summary, isbn, tags);
         setTotalCopies(totalCopies);
+        setAvailableCopies(totalCopies);
     }
 
     public int getTotalCopies() {
         return totalCopies;
+    }
+
+    public void setAvailableCopies(int copies) {
+        availableCopies = copies;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
     }
 
     private void setTotalCopies(int totalCopies) {

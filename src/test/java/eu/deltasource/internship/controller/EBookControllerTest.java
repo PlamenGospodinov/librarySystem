@@ -3,14 +3,23 @@ package eu.deltasource.internship.controller;
 import eu.deltasource.internship.model.book.Author;
 import eu.deltasource.internship.model.book.EBook;
 import eu.deltasource.internship.model.enumeration.Genre;
+import eu.deltasource.internship.model.enumeration.Role;
+import eu.deltasource.internship.model.enumeration.Sex;
 import eu.deltasource.internship.model.enumeration.Tag;
 import eu.deltasource.internship.model.shared.Name;
+import eu.deltasource.internship.model.user.ActiveUser;
+import eu.deltasource.internship.model.user.Address;
+import eu.deltasource.internship.model.user.Credentials;
+import eu.deltasource.internship.model.user.User;
 import eu.deltasource.internship.repository.EBookRepository;
 import eu.deltasource.internship.service.EBookService;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import java.lang.reflect.AccessibleObject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +31,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class EBookControllerTest {
     EBookService service = EBookService.getInstance();
     EBookController controller = new EBookController();
+    UserController userController = new UserController();
     EBookRepository eBookRepoInstance = EBookRepository.getInstance();
+
+    @BeforeAll
+    static void login() {
+        Credentials creds = new Credentials("keke","keke");
+        Name name = new Name("Ivan", "Ivanov", "Nikolov");
+        Address address = new Address("Bulgaria", "Sofia", "Bulgaria 123");
+        User testUser = new User(name, creds,address, 15, Sex.MALE, Role.REGULAR, "blabla@abv.bg", true);
+        ActiveUser.getInstance().setActiveUser(testUser);
+    }
 
     @AfterEach
     void clear() {
@@ -183,6 +202,94 @@ class EBookControllerTest {
         assertEquals(2, eBooksSet.size());
         assertTrue(eBookRepoInstance.getList().contains(ironHeart));
         assertTrue(eBookRepoInstance.getList().contains(ironHeart2));
+    }
+
+    @Test
+    void testDownloadAnEBookSuccessfully() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        genres.add(Genre.SUSPENSE);
+        genres.add(Genre.DETECTIVE);
+        authors.add(IvanVazov);
+        tags.add(Tag.BOOK);
+        EBook HarryPotter = new EBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", "heho.com");
+        eBookRepoInstance.add(HarryPotter);
+
+        // When
+        String downloadLink = controller.download(HarryPotter);
+
+        // Then
+        assertEquals("heho.com", downloadLink);
+    }
+
+    @Test
+    void testDownloadAnEBookWithNullDownloadLinkThrowsAnException() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        genres.add(Genre.SUSPENSE);
+        genres.add(Genre.DETECTIVE);
+        authors.add(IvanVazov);
+        tags.add(Tag.BOOK);
+        EBook HarryPotter = new EBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", null);
+        eBookRepoInstance.add(HarryPotter);
+
+        // When
+        Executable downloadException = () -> controller.download(HarryPotter);
+
+        // Then
+        assertThrows(IllegalArgumentException.class, downloadException);
+    }
+
+    @Test
+    void testDownloadAnEBookWithBlankDownloadLinkThrowsAnException() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        genres.add(Genre.SUSPENSE);
+        genres.add(Genre.DETECTIVE);
+        authors.add(IvanVazov);
+        tags.add(Tag.BOOK);
+        EBook HarryPotter = new EBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", "");
+        eBookRepoInstance.add(HarryPotter);
+
+        // When
+        Executable downloadException = () -> controller.download(HarryPotter);
+
+        // Then
+        assertThrows(IllegalArgumentException.class, downloadException);
+    }
+
+    @Test
+    void testReadAnEBookSuccessfully() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        genres.add(Genre.SUSPENSE);
+        genres.add(Genre.DETECTIVE);
+        authors.add(IvanVazov);
+        tags.add(Tag.BOOK);
+        EBook HarryPotter = new EBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, "sth", "heho.com");
+        eBookRepoInstance.add(HarryPotter);
+
+        // When
+        String readLink = controller.read(HarryPotter);
+
+        // Then
+        assertEquals("sth", readLink);
     }
 
     @Test

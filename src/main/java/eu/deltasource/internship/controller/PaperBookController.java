@@ -4,6 +4,9 @@ import eu.deltasource.internship.model.book.Author;
 import eu.deltasource.internship.model.book.PaperBook;
 import eu.deltasource.internship.model.enumeration.Genre;
 import eu.deltasource.internship.model.enumeration.Tag;
+import eu.deltasource.internship.model.user.ActiveUser;
+import eu.deltasource.internship.model.user.User;
+import eu.deltasource.internship.service.BorrowService;
 import eu.deltasource.internship.service.PaperBookService;
 
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.Set;
 public class PaperBookController {
 
     PaperBookService service = PaperBookService.getInstance();
+    BorrowService borrowService = BorrowService.getInstance();
 
     public PaperBook create(String title, List<Author> authors, List<Genre> genres, String summary, String isbn, List<Tag> tags, int totalCopies) {
         return service.create(title, authors, genres, summary, isbn, tags, totalCopies);
@@ -19,6 +23,16 @@ public class PaperBookController {
 
     public boolean delete(String title, List<Author> authors, List<Genre> genres, String summary, String isbn, List<Tag> tags, int totalCopies) {
         return service.delete(title, authors, genres, summary, isbn, tags, totalCopies);
+    }
+
+    public boolean borrow(PaperBook paperBook) {
+        User user = ActiveUser.getInstance().getActiveUser();
+        return borrowService.borrowABook(user, paperBook);
+    }
+
+    public boolean returnBook(PaperBook paperBook) {
+        User user = ActiveUser.getInstance().getActiveUser();
+        return borrowService.returnABook(user, paperBook);
     }
 
     public boolean deleteByIsbn(String isbn) {

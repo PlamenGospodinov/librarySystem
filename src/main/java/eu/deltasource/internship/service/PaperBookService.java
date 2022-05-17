@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class PaperBookService {
+
     private static PaperBookService INSTANCE;
 
     private final PaperBookRepository repository = PaperBookRepository.getInstance();

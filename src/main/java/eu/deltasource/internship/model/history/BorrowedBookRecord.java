@@ -6,7 +6,10 @@ import eu.deltasource.internship.model.book.PaperBook;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class BorrowedBookInfo {
+/**
+ * Stores information of a book record
+ */
+public class BorrowedBookRecord {
 
     private PaperBook borrowedBook;
 
@@ -16,11 +19,11 @@ public class BorrowedBookInfo {
 
     private int postponementDays;
 
-    public BorrowedBookInfo(PaperBook borrowedBook, LocalDate borrowDate) {
+    public BorrowedBookRecord(PaperBook borrowedBook) {
         setBorrowedBook(borrowedBook);
-        setBorrowDate(borrowDate);
+        setBorrowDate();
         setReturnDate();
-        setPostponementDays(0);
+        postponementDays = 0;
     }
 
     /**
@@ -36,8 +39,8 @@ public class BorrowedBookInfo {
             System.out.println("You have already postponed for " + getPostponementDays() + ".The allowed postponement is only 14 days!");
             return false;
         }
-        setPostponementDays(getPostponementDays() + days);
-        setNewReturnDate(days);
+        postponementDays += days;
+        returnDate = returnDate.plusDays(days);
         return true;
     }
 
@@ -53,37 +56,33 @@ public class BorrowedBookInfo {
         return returnDate;
     }
 
-    public void setPostponementDays(int days) {
-        postponementDays = days;
+    public LocalDate getBorrowDate() {
+        return borrowDate;
     }
 
-    public void setBorrowedBook(PaperBook borrowedBook) {
+    private void setBorrowedBook(PaperBook borrowedBook) {
         if(borrowedBook == null) {
             throw new SetterValidationException("book");
         }
         this.borrowedBook = borrowedBook;
     }
 
-    public void setBorrowDate(LocalDate borrowDate) {
-        if(borrowDate == null) {
-            throw new SetterValidationException("borrow");
-        }
-        this.borrowDate = borrowDate;
+    private void setBorrowDate() {
+        borrowDate = LocalDate.now();
     }
 
-    public void setReturnDate() {
+    /**
+     * Sets the return date 14 days from the borrow date as each user is able to borrow a book for 14 days
+     */
+    private void setReturnDate() {
         this.returnDate = borrowDate.plusDays(14);
-    }
-
-    public void setNewReturnDate(int days) {
-        returnDate = returnDate.plusDays(days);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BorrowedBookInfo that = (BorrowedBookInfo) o;
+        BorrowedBookRecord that = (BorrowedBookRecord) o;
         return borrowedBook.equals(that.borrowedBook) && borrowDate.equals(that.borrowDate) && returnDate.equals(that.returnDate);
     }
 

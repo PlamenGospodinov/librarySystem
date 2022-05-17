@@ -3,10 +3,17 @@ package eu.deltasource.internship.controller;
 import eu.deltasource.internship.model.book.Author;
 import eu.deltasource.internship.model.book.PaperBook;
 import eu.deltasource.internship.model.enumeration.Genre;
+import eu.deltasource.internship.model.enumeration.Role;
+import eu.deltasource.internship.model.enumeration.Sex;
 import eu.deltasource.internship.model.enumeration.Tag;
 import eu.deltasource.internship.model.shared.Name;
+import eu.deltasource.internship.model.user.ActiveUser;
+import eu.deltasource.internship.model.user.Address;
+import eu.deltasource.internship.model.user.Credentials;
+import eu.deltasource.internship.model.user.User;
 import eu.deltasource.internship.repository.PaperBookRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -21,6 +28,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class PaperBookControllerTest {
     PaperBookController controller = new PaperBookController();
     PaperBookRepository paperBookRepoInstance = PaperBookRepository.getInstance();
+
+    @BeforeAll
+    static void login() {
+        Credentials creds = new Credentials("keke","keke");
+        Name name = new Name("Ivan", "Ivanov", "Nikolov");
+        Address address = new Address("Bulgaria", "Sofia", "Bulgaria 123");
+        User testUser = new User(name, creds,address, 15, Sex.MALE, Role.REGULAR, "blabla@abv.bg", true);
+        ActiveUser.getInstance().setActiveUser(testUser);
+    }
 
     @AfterEach
     void clear() {
@@ -621,5 +637,115 @@ class PaperBookControllerTest {
 
         // Then
         assertThrows(IllegalArgumentException.class, nullArgument);
+    }
+
+    @Test
+    void testBorrowABookSuccessfully() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        genres.add(Genre.SUSPENSE);
+        genres.add(Genre.DETECTIVE);
+        authors.add(IvanVazov);
+        tags.add(Tag.BOOK);
+        PaperBook HarryPotter = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 2);
+        paperBookRepoInstance.add(HarryPotter);
+
+        // When
+        boolean successfulBorrow = controller.borrow(HarryPotter);
+
+        // Then
+        assertTrue(successfulBorrow);
+    }
+
+
+    @Test
+    void testBorrowABookThatDoesntExistThrowsAnException() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        genres.add(Genre.SUSPENSE);
+        genres.add(Genre.DETECTIVE);
+        authors.add(IvanVazov);
+        tags.add(Tag.BOOK);
+        PaperBook HarryPotter = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 2);
+
+        // When
+        Executable borrowException = () -> controller.borrow(HarryPotter);
+
+        // Then
+        assertThrows(IllegalArgumentException.class, borrowException);
+    }
+
+    @Test
+    void testReturnABookSuccessfully() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        genres.add(Genre.SUSPENSE);
+        genres.add(Genre.DETECTIVE);
+        authors.add(IvanVazov);
+        tags.add(Tag.BOOK);
+        PaperBook HarryPotter = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 2);
+        paperBookRepoInstance.add(HarryPotter);
+        controller.borrow(HarryPotter);
+
+        // When
+        boolean successfulReturn = controller.returnBook(HarryPotter);
+
+        // Then
+        assertTrue(successfulReturn);
+    }
+
+    @Test
+    void testReturnABookThatDoesntExistThrowsAnException() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        genres.add(Genre.SUSPENSE);
+        genres.add(Genre.DETECTIVE);
+        authors.add(IvanVazov);
+        tags.add(Tag.BOOK);
+        PaperBook HarryPotter = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 2);
+
+        // When
+        Executable returnException = () -> controller.returnBook(HarryPotter);
+
+        // Then
+        assertThrows(IllegalArgumentException.class, returnException);
+    }
+
+    @Test
+    void testReturnABookThatDoesntWasntBorrowedThrowsAnException() {
+        // Given
+        Name name = new Name("Ivan", "Minchov", "Vazov");
+        Author IvanVazov = new Author(name, "Bulgaria", LocalDate.of(1850, 7, 9), LocalDate.of(1921, 9, 22));
+        List<Author> authors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
+        genres.add(Genre.SUSPENSE);
+        genres.add(Genre.DETECTIVE);
+        authors.add(IvanVazov);
+        tags.add(Tag.BOOK);
+        PaperBook HarryPotter = new PaperBook("RandomName", authors, genres, "Sth small", "98-54-895-98", tags, 2);
+        paperBookRepoInstance.add(HarryPotter);
+
+        // When
+        Executable returnException = () -> controller.returnBook(HarryPotter);
+
+        // Then
+        assertThrows(IllegalArgumentException.class, returnException);
     }
 }

@@ -136,15 +136,15 @@ class UserRepositoryTest {
         Name name = new Name("Ivan", "Minchov", "Vazov");
         Credentials credentials = new Credentials("pesho123", "efs8efs494");
         Address address = new Address("Bulgaria", "Plovdiv", "bul Bulgaria 128");
-        User Peshkata = new User(name, credentials, address, 19, Sex.MALE, Role.REGULAR, "peshooo@abv.bg", true);
-        userRepoInstance.add(Peshkata);
+        User Ivan = new User(name, credentials, address, 19, Sex.MALE, Role.REGULAR, "peshooo@abv.bg", true);
+        userRepoInstance.add(Ivan);
         Credentials creds = new Credentials("pesho123", "efs8efs494");
 
         // When
         User returnedUser = userRepoInstance.get(creds);
 
         // Then
-        assertEquals(Peshkata, returnedUser);
+        assertEquals(Ivan, returnedUser);
     }
 
     @Test

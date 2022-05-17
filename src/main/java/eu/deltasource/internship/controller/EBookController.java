@@ -4,6 +4,8 @@ import eu.deltasource.internship.model.book.Author;
 import eu.deltasource.internship.model.book.EBook;
 import eu.deltasource.internship.model.enumeration.Genre;
 import eu.deltasource.internship.model.enumeration.Tag;
+import eu.deltasource.internship.model.user.ActiveUser;
+import eu.deltasource.internship.model.user.User;
 import eu.deltasource.internship.service.EBookService;
 
 import java.util.List;
@@ -22,11 +24,13 @@ public class EBookController {
     }
 
     public String read(EBook book) {
-        return service.read(book);
+        User user = ActiveUser.getInstance().getActiveUser();
+        return service.read(book, user);
     }
 
     public String download(EBook book) {
-        return service.read(book);
+        User user = ActiveUser.getInstance().getActiveUser();
+        return service.download(book,user);
     }
 
     public boolean deleteByIsbn(String isbn) {
