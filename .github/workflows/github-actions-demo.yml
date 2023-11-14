@@ -24,8 +24,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build . --tag ghcr.io/${{github.actor}}/librarysystem:latest
-          docker push ghcr.io/${{github.actor}}/librarysystem:latest
+          docker build . --tag ghcr.io/plamengospodinov/librarysystem:latest
+          docker push ghcr.io/plamengospodinov/librarysystem:latest
 
   test-job:
     runs-on: ubuntu-latest
@@ -61,4 +61,4 @@ jobs:
 
       - name: Pull Docker Image
         run: |
-          docker pull ghcr.io/${{github.actor}}/librarysystem:latest
+          docker pull ghcr.io/plamengospodinov/librarysystem:latest
